@@ -27,9 +27,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
-
 defineOptions({
   name: 'MainLayout'
 })
@@ -37,11 +34,6 @@ defineOptions({
 const year = new Date().getFullYear();
 
 
-const leftDrawerOpen = ref(false)
-
-function toggleLeftDrawer() {
-  leftDrawerOpen.value = !leftDrawerOpen.value
-}
 </script>
 
 <style lang="scss">
