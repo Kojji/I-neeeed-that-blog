@@ -18,24 +18,41 @@
 </template>
 
 <script setup>
+import CategoryCard from 'src/components/CategoryCard.vue';
+import { ref } from 'vue'
+import { db } from 'boot/firebase';
+import {
+  query,
+  where,
+  limit,
+  getDocs,
+  collection
+} from "firebase/firestore"
+
 defineOptions({
   name: 'CategoriesPage'
 });
 
-import CategoryCard from 'src/components/CategoryCard.vue';
+const categoriesList = ref([]);
 
-const categoriesList = [
-  {
-    title: 'Cooking Gadgets',
-    photoUrl: 'https://ae-pic-a1.aliexpress-media.com/kf/S3a417784280a4979a195eae718cfe28fF.jpg_640x640Q90.jpg_.webp',
-    urlAlias: 'cooking-gadgets',
-    active: true
-  },
-  {
-    title: 'Christmas Gifts',
-    photoUrl: 'https://images.mid-day.com/images/images/2022/nov/christmas_d.jpg',
-    urlAlias: 'christmas-gifts',
-    active: true
-  },
-];
+let categoriesArray = [];
+const categoriesQuery = query(collection(db, "categories"), where("active", "==", true), limit(6))
+getDocs(categoriesQuery)
+  .then((categoriesQuerySnapshot) => {
+    categoriesQuerySnapshot.forEach((doc) => {
+      let docData = doc.data()
+      categoriesArray.push({
+        id: doc.id,
+        title: docData.title,
+        urlAlias: docData['url-alias'],
+        active: docData.active,
+        photoUrl: docData['photo-url']
+      })
+    });
+    console.log(categoriesArray)
+    categoriesList.value = categoriesArray;
+  }).catch(error => {
+    console.log(error);
+  })
+
 </script>

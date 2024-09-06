@@ -3,7 +3,7 @@
     <q-header elevated class="bg-white text-teal-9 ">
       <q-toolbar class="custom-container ">
         <q-toolbar-title>
-          Quasar App
+          I NEED THAT!
         </q-toolbar-title>
 
         <div>Quasar v{{ $q.version }}</div>
@@ -32,7 +32,6 @@ defineOptions({
 })
 
 const year = new Date().getFullYear();
-
 
 </script>
 
