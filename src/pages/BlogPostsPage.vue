@@ -11,7 +11,7 @@
         </div>
       </q-list>
       <div class="row justify-center q-ma-md">
-        <q-pagination v-model="current" max="5" gutter="sm" direction-links outline color="teal-9"
+        <q-pagination v-model="current" :max="1" :max-pages="5" gutter="sm" direction-links outline color="teal-9"
           active-design="unelevated" active-color="teal-9" active-text-color="white" />
       </div>
     </div>
@@ -27,7 +27,7 @@ import { useCategorySelected } from 'src/stores/BlogNavigation';
 const store = useCategorySelected();
 const route = useRoute();
 
-let current = ref(3);
+let current = ref(1);
 const categorySelected = computed(() => store.getCategorySelected);
 
 defineOptions({

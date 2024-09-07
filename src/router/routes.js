@@ -12,7 +12,7 @@ const routes = [
     ],
   },
   {
-    path: "/post/:id",
+    path: "/category/:alias/post/:id",
     component: () => import("layouts/MainLayout.vue"),
     children: [
       {

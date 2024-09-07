@@ -56,7 +56,7 @@ async function navigateToPostPage(params) {
       urlAlias: props.urlAlias
     }
   })
-  router.push('/post/' + params)
+  router.push(router.currentRoute.value.fullPath + '/post/' + params)
 }
 </script>
 
@@ -64,9 +64,9 @@ async function navigateToPostPage(params) {
 .post-card {
   width: 100%;
   background: rgb(255, 255, 255);
-  background: linear-gradient(142deg, rgba(255, 255, 255, 1) 38%, rgba(52, 167, 153, 1) 50%, rgba(255, 255, 255, 1) 61%) right;
+  background: linear-gradient(142deg, rgba(255, 255, 255, 1) 30%, rgba(52, 167, 153, 1) 50%, rgba(255, 255, 255, 1) 61%) right;
   background-size: 300% 100%;
-  transition: background-position 0.5s linear;
+  transition: background-position 0.4s ease-in;
 
   &:hover {
     background-position: left;
