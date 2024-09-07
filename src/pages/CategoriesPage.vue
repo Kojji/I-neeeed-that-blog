@@ -13,17 +13,23 @@
           <CategoryCard v-for="categoryItem in categoriesList" :key="categoryItem.title" v-bind="categoryItem" />
         </div>
       </q-list>
+      <div class="row justify-center q-ma-md">
+        <q-pagination v-model="current" max="5" gutter="sm" direction-links outline color="teal-9"
+          active-design="unelevated" active-color="teal-9" active-text-color="white" />
+      </div>
     </div>
   </q-page>
 </template>
 
 <script setup>
 import CategoryCard from 'src/components/CategoryCard.vue';
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { useCategoryListStore } from 'stores/CategoryList';
 
 const store = useCategoryListStore();
 const categoriesList = computed(() => store.getCategories);
+
+let current = ref(3);
 
 defineOptions({
   name: 'CategoriesPage',

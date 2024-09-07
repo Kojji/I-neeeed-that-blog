@@ -1,5 +1,5 @@
 <template>
-  <q-card flat bordered class="my-card col-12 q-ma-xs" @click="navigateToPostPage(urlAlias)">
+  <q-card flat bordered class="post-card col-12 q-ma-xs" @click="navigateToPostPage(urlAlias)">
     <q-card-section horizontal>
       <q-card-section class="col-4 flex flex-center">
         <q-img class="rounded-borders" :src="props.photoUrl" :ratio="16 / 9">
@@ -13,11 +13,14 @@
       </q-card-section>
     </q-card-section>
   </q-card>
+
 </template>
 
 <script setup>
+import { usePostSelectedStore } from 'stores/BlogPost';
 import { useRouter } from "vue-router";
 const router = useRouter();
+const store = usePostSelectedStore();
 
 defineOptions({
   name: 'CategoryCard'
@@ -44,26 +47,29 @@ const props = defineProps({
     default: false
   }
 })
-
-function navigateToPostPage(params) {
+console.log(props)
+async function navigateToPostPage(params) {
   console.log(params)
-  // router.push('/category/' + params)
+  await store.$patch({
+    postSelected: {
+      title: props.title,
+      urlAlias: props.urlAlias
+    }
+  })
+  router.push('/post/' + params)
 }
 </script>
 
 <style lang="scss">
-.my-card {
+.post-card {
   width: 100%;
-}
+  background: rgb(255, 255, 255);
+  background: linear-gradient(142deg, rgba(255, 255, 255, 1) 38%, rgba(52, 167, 153, 1) 50%, rgba(255, 255, 255, 1) 61%) right;
+  background-size: 300% 100%;
+  transition: background-position 0.5s linear;
 
-.subtitle-section {
-  bottom: 0;
-  width: 100%;
-  height: 10%;
-  min-height: 40px;
-  padding: 0 !important;
-  color: #fff;
-  background: rgba(0, 0, 0, 0.47);
-
+  &:hover {
+    background-position: left;
+  }
 }
 </style>

@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const useCategorySelectedStore = defineStore("categorySelected", {
+export const useCategorySelected = defineStore("categorySelected", {
   state: () => ({
     title: "",
     active: false,

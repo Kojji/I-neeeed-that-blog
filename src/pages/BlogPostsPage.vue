@@ -22,13 +22,13 @@
 import BlogPostCard from 'src/components/BlogPostCard.vue';
 import { ref, computed } from 'vue'
 import { useRoute } from "vue-router";
-import { useCategorySelectedStore } from 'stores/BlogNavigationStore';
+import { useCategorySelected } from 'src/stores/BlogNavigation';
 
-const store = useCategorySelectedStore();
+const store = useCategorySelected();
 const route = useRoute();
 
 let current = ref(3);
-const categorySelected = computed(() => store.getCategorySelected).value;
+const categorySelected = computed(() => store.getCategorySelected);
 
 defineOptions({
   name: 'BlogPostsPage'

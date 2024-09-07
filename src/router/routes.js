@@ -4,13 +4,22 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [
       { path: "", component: () => import("pages/CategoriesPage.vue") },
+      {
+        path: "/category/:alias",
+        name: "category-posts",
+        component: () => import("pages/BlogPostsPage.vue"),
+      },
     ],
   },
   {
-    path: "/category/:alias",
+    path: "/post/:id",
     component: () => import("layouts/MainLayout.vue"),
     children: [
-      { path: "", component: () => import("pages/BlogPostsPage.vue") },
+      {
+        path: "",
+        name: "post-page",
+        component: () => import("pages/PostPage.vue"),
+      },
     ],
   },
 

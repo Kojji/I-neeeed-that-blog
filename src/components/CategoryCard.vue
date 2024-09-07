@@ -1,5 +1,5 @@
 <template>
-  <q-card class="my-card col-6 col-md-4 q-pa-sm" @click="navigateToPostList(urlAlias)">
+  <q-card class="category-card col-6 col-md-4 q-pa-sm" @click="navigateToPostList(urlAlias)">
     <q-img :src="props.photoUrl" :ratio="16 / 9">
       <div class="col content-center subtitle-section text-h6 text-center">
         {{ props.title }}
@@ -10,10 +10,10 @@
 
 <script setup>
 import { useRouter } from "vue-router";
-import { useCategorySelectedStore } from 'stores/BlogNavigationStore';
+import { useCategorySelected } from 'stores/BlogNavigation';
 
 const router = useRouter();
-const store = useCategorySelectedStore();
+const store = useCategorySelected();
 
 defineOptions({
   name: 'CategoryCard'
@@ -54,7 +54,7 @@ async function navigateToPostList(params) {
 </script>
 
 <style lang="scss">
-.my-card {
+.category-card {
   width: 100%;
   box-shadow: none !important;
 
