@@ -24,7 +24,7 @@ const store = usePostSelectedStore();
 
 defineOptions({
   name: 'CategoryCard'
-})
+});
 
 const props = defineProps({
   title: {
@@ -46,7 +46,7 @@ const props = defineProps({
     type: Boolean,
     default: false
   }
-})
+});
 console.log(props)
 async function navigateToPostPage(params) {
   console.log(params)
@@ -55,9 +55,9 @@ async function navigateToPostPage(params) {
       title: props.title,
       urlAlias: props.urlAlias
     }
-  })
+  });
   router.push(router.currentRoute.value.fullPath + '/post/' + params)
-}
+};
 </script>
 
 <style lang="scss">

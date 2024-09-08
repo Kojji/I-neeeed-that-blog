@@ -49,7 +49,8 @@ const postSection = [{
   link: "https://images.mid-day.com/images/images/2022/nov/christmas_d.jpg",
   alt: "christmas presents",
   ratio: 16 / 9,
-  col: "10" //corrigir - add label
+  col: "10",
+  label: "Xmas presents"
 },
 {
   order: 3,
@@ -57,22 +58,26 @@ const postSection = [{
   data: "Example Title for a section",
   identifier: "example-title"
 },
+// {
+//   order: 4,
+//   type: "embed",
+//   label: "Related Videos",
+//   links: [
+//     "1O3uY2WUyzQ",
+//     "CxF6juFptfM"
+//   ],
+//   origin: "Youtube"
+// },
 {
-  order: 4,
-  type: "embed",
-  label: "Related Videos",
-  links: [
-    "1O3uY2WUyzQ",
-    "CxF6juFptfM"
-  ],
-  origin: "https://www.youtube.com/embed/"
-},
-{ //corrigir - implementar componente
   order: 5,
   type: "cta",
   products: [
+    "B09BYS91QG",
+    "B09XK885PH"
     // ids
-  ],
+    // corrigir - availability varies per country, how to accomodate? (flag selection on top bar / or other idea)
+  ], //https://www.amazon.com.au/gp/aws/cart/add.html?ASIN.1=B0B84FD7RC&Quantity.1=2&ASIN.2=B09BYS91QG&Quantity.2=3
+  origin: "Amazon"
 }];
 
 /* data types

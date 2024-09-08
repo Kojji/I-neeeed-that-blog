@@ -1,0 +1,193 @@
+<template>
+  <div class="row justify-center">
+    <div class="col-11">
+      <q-card class="bg-teal-1 col" flat bordered>
+        <q-card-section>
+          Find it on Amazon
+        </q-card-section>
+        <q-separator inset />
+        <q-card-section v-for="productCard in productsFetch.ItemResults.Items" :key="productCard.ASIN"
+          class="row justify-between q-pa-xs items-center">
+          <q-img style="max-width: 100px;" :src="productCard.Images.Primary.Small.URL"></q-img>
+
+          <q-card-section>
+            <!-- list, checkmark, add to cart or to buylist action, tooltip on buttons -->
+            amazon products
+            <!-- {{ productCard.ItemInfo.Title.DisplayAmount }} -->
+          </q-card-section>
+          <q-card-section>
+            <q-checkbox v-model="checkboxArray" :val="productCard.ASIN" />
+          </q-card-section>
+        </q-card-section>
+        <q-separator inset />
+        <q-card-section>
+          <q-btn>add to buylist</q-btn>
+          <q-btn>add to cart button</q-btn>
+        </q-card-section>
+      </q-card>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+
+defineOptions({
+  name: 'PostSectionCtaAmazon'
+});
+
+const checkboxArray = ref([]);
+
+const embedLinks = {
+  'Amazon': "https://www.youtube.com/embed/",
+};
+
+const props = defineProps({
+  products: {
+    type: Array,
+    required: true
+  },
+});
+
+const productsFetch = {
+  "Errors": [
+    {
+      "__type": "com.amazon.paapi#ErrorData",
+      "Code": "ItemNotAccessible",
+      "Message": "The ItemId B01180YUXS is not accessible through the Product Advertising API."
+    }
+  ],
+  "ItemResults": {
+    "Items": [
+      {
+        "ASIN": "B0199980K4",
+        "DetailPageURL": "https://www.amazon.com/dp/B0199980K4?tag=xyz-20&linkCode=ogi&language=en_US&th=1&psc=1",
+        "Images": {
+          "Primary": {
+            "Small": {
+              "Height": 75,
+              "URL": "https://m.media-amazon.com/images/I/61s4tTAizUL._SL75_.jpg",
+              "Width": 56
+            }
+          }
+        },
+        "ItemInfo": {
+          "Title": {
+            "DisplayValue": "Genghis: The Legend of the Ten",
+            "Label": "Title",
+            "Locale": "en_US"
+          }
+        },
+        "Offers": {
+          "Summaries": [
+            {
+              "Condition": {
+                "DisplayValue": "nuevo",
+                "Label": "Condición",
+                "Locale": "es_US",
+                "Value": "New"
+              },
+              "HighestPrice": {
+                "Amount": 11.99,
+                "Currency": "USD",
+                "DisplayAmount": "$11.99"
+              }
+            }
+          ]
+        },
+        "ParentASIN": "B07QGKM68X"
+      },
+      {
+        "ASIN": "B00BKQTA4A",
+        "DetailPageURL": "https://www.amazon.com/dp/B00BKQTA4A?tag=xyz-20&linkCode=ogi&language=en_US&th=1&psc=1",
+        "Images": {
+          "Primary": {
+            "Small": {
+              "Height": 75,
+              "URL": "https://m.media-amazon.com/images/I/41OiLOcQVJL._SL75_.jpg",
+              "Width": 46
+            }
+          }
+        },
+        "ItemInfo": {
+          "Features": {
+            "DisplayValues": [
+              "Round watch featuring logoed white dial with stick indices",
+              "36 mm stainless steel case with mineral dial window",
+              "Quartz movement with analog display",
+              "Leather calfskin band with buckle closure",
+              "Water resistant to 30 m (99 ft): In general, withstands splashes or brief immersion in water, but not suitable for swimming"
+            ],
+            "Label": "Features",
+            "Locale": "en_US"
+          },
+          "Title": {
+            "DisplayValue": "Daniel Wellington Women's 0608DW Sheffield Stainless Steel Watch",
+            "Label": "Title",
+            "Locale": "en_US"
+          }
+        },
+        "Offers": {
+          "Summaries": [
+            {
+              "Condition": {
+                "DisplayValue": "nuevo",
+                "Label": "Condición",
+                "Locale": "es_US",
+                "Value": "New"
+              },
+              "HighestPrice": {
+                "Amount": 199,
+                "Currency": "USD",
+                "DisplayAmount": "$199.00"
+              }
+            }
+          ]
+        },
+        "ParentASIN": "B07L5N7P32"
+      },
+      {
+        "ASIN": "B000HZD168",
+        "DetailPageURL": "https://www.amazon.com/dp/B000HZD168?tag=xyz-20&linkCode=ogi&language=en_US&th=1&psc=1",
+        "Images": {
+          "Primary": {
+            "Small": {
+              "Height": 75,
+              "URL": "https://m.media-amazon.com/images/I/61ZRPpZoBvL._SL75_.jpg",
+              "Width": 56
+            }
+          }
+        },
+        "ItemInfo": {
+          "Title": {
+            "DisplayValue": "Star Trek II: The Wrath of Khan",
+            "Label": "Title",
+            "Locale": "en_US"
+          }
+        },
+        "Offers": {
+          "Summaries": [
+            {
+              "Condition": {
+                "DisplayValue": "nuevo",
+                "Label": "Condición",
+                "Locale": "es_US",
+                "Value": "New"
+              },
+              "HighestPrice": {
+                "Amount": 9.99,
+                "Currency": "USD",
+                "DisplayAmount": "$9.99"
+              }
+            }
+          ]
+        },
+        "ParentASIN": "B07G9PHJJH"
+      }
+    ]
+  }
+}
+
+</script>
+
+<style lang="scss"></style>

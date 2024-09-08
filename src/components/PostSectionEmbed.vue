@@ -4,7 +4,7 @@
       <q-card class="bg-teal-1">
         <q-card-section class="row justify-evenly">
           <div v-for="videoLink in props.links" :key="videoLink">
-            <q-video class="q-pa-md video-embeded" :src="`${props.origin + videoLink}`" />
+            <q-video class="q-pa-md video-embeded" :src="`${embedLinks[props.origin] + videoLink}`" />
           </div>
         </q-card-section>
       </q-card>
@@ -17,7 +17,11 @@
 
 defineOptions({
   name: 'PostSectionEmbed'
-})
+});
+
+const embedLinks = {
+  'Youtube': "https://www.youtube.com/embed/",
+};
 
 const props = defineProps({
   order: {
@@ -40,7 +44,7 @@ const props = defineProps({
     type: String,
     required: true
   },
-})
+});
 
 </script>
 

@@ -17,7 +17,7 @@ const store = useCategorySelected();
 
 defineOptions({
   name: 'CategoryCard'
-})
+});
 
 const props = defineProps({
   title: {
@@ -39,7 +39,7 @@ const props = defineProps({
     type: Boolean,
     default: false
   }
-})
+});
 
 async function navigateToPostList(params) {
   await store.$patch({
@@ -50,7 +50,7 @@ async function navigateToPostList(params) {
   })
   console.log(params)
   router.push('/category/' + params)
-}
+};
 </script>
 
 <style lang="scss">

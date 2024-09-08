@@ -1,6 +1,11 @@
 <template>
   <div class="row justify-center">
-    <q-img :class="`col-${props.col}`" :ratio="`${props.ratio}`" :src="props.link" :alt="props.alt" />
+    <q-card flat bordered :class="`col-${props.col} text-center`">
+      <q-img :ratio="`${props.ratio}`" :src="props.link" :alt="props.alt" />
+      <q-card-section v-if="props.label" class="text-caption">
+        Image: {{ props.label }}
+      </q-card-section>
+    </q-card>
   </div>
 </template>
 
@@ -8,7 +13,7 @@
 
 defineOptions({
   name: 'PostSectionText'
-})
+});
 
 const props = defineProps({
   order: {
@@ -34,7 +39,11 @@ const props = defineProps({
   col: {
     type: String,
     default: "12"
+  },
+  label: {
+    type: String,
+    default: null
   }
-})
+});
 
 </script>

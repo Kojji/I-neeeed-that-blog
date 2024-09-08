@@ -8,7 +8,7 @@
 
 defineOptions({
   name: 'PostSectionText'
-})
+});
 
 const props = defineProps({
   order: {
@@ -27,6 +27,6 @@ const props = defineProps({
     type: String,
     default: ""
   }
-})
+});
 
 </script>

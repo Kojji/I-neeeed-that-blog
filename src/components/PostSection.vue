@@ -4,6 +4,7 @@
     <PostSectionImage v-if="props.section.type === 'image'" v-bind="props.section" />
     <PostSectionEmbed v-if="props.section.type === 'embed'" v-bind="props.section" />
     <PostSectionTitle v-if="props.section.type === 'title'" v-bind="props.section" />
+    <PostSectionCta v-if="props.section.type === 'cta'" v-bind="props.section" />
   </div>
 </template>
 
@@ -12,6 +13,7 @@ import PostSectionText from 'src/components/PostSectionText.vue';
 import PostSectionImage from 'src/components/PostSectionImage.vue';
 import PostSectionEmbed from 'src/components/PostSectionEmbed.vue';
 import PostSectionTitle from 'src/components/PostSectionTitle.vue';
+import PostSectionCta from 'src/components/PostSectionCta.vue';
 
 defineOptions({
   name: 'PostSection'
