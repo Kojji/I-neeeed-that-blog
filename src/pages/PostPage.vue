@@ -27,15 +27,21 @@ const postSelected = {
   title: 'Getting SSR to work with Quasar Framework with Vue Composition as the State Management Choice',
   photoUrl: 'https://ae-pic-a1.aliexpress-media.com/kf/S3a417784280a4979a195eae718cfe28fF.jpg_640x640Q90.jpg_.webp',
   urlAlias: 'cooking-gadgets',
+  author: 'Fernando Koji Yamashiro',
   active: true
 };
 
 defineOptions({
-  name: 'PostPage'
+  name: 'PostPage',
+
+  async preFetch({ currentRoute }) {
+    console.log("blog post page prefetch")
+    // retrieve post content from db
+  }
 });
 
 // console.log(postSelected.value)
-console.log(route.params)
+console.log(route.params.alias)
 
 const postSection = [{
   order: 1,

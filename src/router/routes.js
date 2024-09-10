@@ -7,7 +7,7 @@ const routes = [
       {
         path: "/category/:alias",
         name: "category-posts",
-        component: () => import("pages/BlogPostsPage.vue"),
+        component: () => import("pages/BlogPostListPage.vue"),
       },
     ],
   },

@@ -20,35 +20,24 @@
 
 <script setup>
 import BlogPostCard from 'src/components/BlogPostCard.vue';
-import { ref, computed } from 'vue'
-import { useRoute } from "vue-router";
-import { useCategorySelected } from 'src/stores/BlogNavigation';
+import { ref, computed } from 'vue';
+import { useCategorySelected } from 'stores/CategoryPostList';
 
 const store = useCategorySelected();
-const route = useRoute();
 
 let current = ref(1);
 const categorySelected = computed(() => store.getCategorySelected);
+const postsList = computed(() => store.getPostList);
 
 defineOptions({
-  name: 'BlogPostsPage'
+  name: 'BlogPostsPage',
+
+  async preFetch({ store, currentRoute }) {
+    const categorySelectedStore = useCategorySelected(store);
+    await categorySelectedStore.retrievePostList(currentRoute.params.alias);
+    console.log("blog post list page prefetch");
+    // retrieve post list from db
+  }
 });
 
-console.log(categorySelected)
-console.log(route.params)
-
-const postsList = [
-  {
-    title: 'Post 1',
-    photoUrl: 'https://ae-pic-a1.aliexpress-media.com/kf/S3a417784280a4979a195eae718cfe28fF.jpg_640x640Q90.jpg_.webp',
-    urlAlias: 'cooking-gadgets',
-    active: true
-  },
-  {
-    title: 'Christmas Gifts',
-    photoUrl: 'https://images.mid-day.com/images/images/2022/nov/christmas_d.jpg',
-    urlAlias: 'christmas-gifts',
-    active: true
-  },
-];
 </script>

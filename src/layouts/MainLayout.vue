@@ -3,9 +3,9 @@
     <q-header elevated class="bg-white text-teal-9 ">
       <q-toolbar class="custom-container ">
         <q-toolbar-title>
-          <a class="text-teal-9" href="/" target="_blank" style="text-decoration: none;">
+          <router-link to="/" class="text-teal-9" style="text-decoration: none;">
             I NEED THAT!
-          </a>
+          </router-link>
         </q-toolbar-title>
 
         <div>Quasar v{{ $q.version }}</div>

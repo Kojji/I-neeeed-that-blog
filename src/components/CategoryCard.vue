@@ -10,7 +10,7 @@
 
 <script setup>
 import { useRouter } from "vue-router";
-import { useCategorySelected } from 'stores/BlogNavigation';
+import { useCategorySelected } from 'stores/CategoryPostList';
 
 const router = useRouter();
 const store = useCategorySelected();

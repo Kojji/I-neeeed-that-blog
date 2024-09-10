@@ -47,7 +47,6 @@ const props = defineProps({
     default: false
   }
 });
-console.log(props)
 async function navigateToPostPage(params) {
   console.log(params)
   await store.$patch({
