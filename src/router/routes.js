@@ -4,8 +4,14 @@ const routes = [
     component: () => import("layouts/MainLayout.vue"),
     children: [
       { path: "", component: () => import("pages/CategoriesPage.vue") },
+    ],
+  },
+  {
+    path: "/category/:alias",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
       {
-        path: "/category/:alias",
+        path: "",
         name: "category-posts",
         component: () => import("pages/BlogPostListPage.vue"),
       },
@@ -19,6 +25,28 @@ const routes = [
         path: "",
         name: "post-page",
         component: () => import("pages/PostPage.vue"),
+      },
+    ],
+  },
+  {
+    path: "/admin/login",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        name: "admin-login-page",
+        component: () => import("pages/AdminLoginPage.vue"),
+      },
+    ],
+  },
+  {
+    path: "/admin/preview",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        name: "post-preview-page",
+        component: () => import("pages/PreviewPage.vue"),
       },
     ],
   },

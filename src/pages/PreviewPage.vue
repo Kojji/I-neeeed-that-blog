@@ -2,26 +2,28 @@
   <q-page class="row post-container">
     <div class="col">
       <p class="text-h4 text-weight-bolder q-my-lg">
-        {{ postSelected.title }}
+        Preview
       </p>
       <q-separator color="teal-9" inset />
-      <q-list>
+      <!-- <q-list>
         <PostSection v-for="section in postSection" :key="section.order" v-bind:section="section" />
-      </q-list>
+      </q-list> -->
     </div>
   </q-page>
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useRoute } from "vue-router";
 import { usePostSelectedStore } from 'stores/BlogPost';
+import { useAuthenticationStore } from 'stores/LoginAuth';
 import PostSection from 'src/components/PostSection.vue';
 
-
+const authStore = useAuthenticationStore();
 const store = usePostSelectedStore();
 const route = useRoute();
 
+const loggedIn = computed(() => authStore.getLoggedIn);
 // const postSelected = computed(() => store.getPostSelected);
 const postSelected = {
   title: 'Getting SSR to work with Quasar Framework with Vue Composition as the State Management Choice',
@@ -32,13 +34,21 @@ const postSelected = {
 };
 
 defineOptions({
-  name: 'PostPage',
+  name: 'PreviewPage',
 
   async preFetch({ currentRoute }) {
     console.log("blog post page prefetch")
     // retrieve post content from db
   }
 });
+
+onMounted(() => {
+  if (!loggedIn.value) {
+    authStore.checkToken().catch(() => {
+      router.push("/admin/login");
+    })
+  }
+})
 
 // console.log(postSelected.value)
 console.log(route.params.alias)
@@ -86,26 +96,6 @@ const postSection = [{
   origin: "Amazon"
 }];
 
-/* data types
-    embed
-      links
-      origin
-      label
-    text
-      data
-    image
-      link
-      alt
-      ratio
-      col
-    cta
-      links
-    title
-      data
-      identifier
-
-    compare *
-*/
 </script>
 
 <style lang="scss">

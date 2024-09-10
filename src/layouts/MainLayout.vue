@@ -8,7 +8,16 @@
           </router-link>
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <div>
+          <div v-if="loggedIn">
+            <q-btn color="teal-9" @click="logout()">
+              Log out
+            </q-btn>
+          </div>
+          <div v-else>
+            Quasar v{{ $q.version }}
+          </div>
+        </div>
       </q-toolbar>
     </q-header>
 
@@ -29,12 +38,31 @@
 </template>
 
 <script setup>
+import { useAuthenticationStore } from 'stores/LoginAuth';
+import { computed } from 'vue';
+import { useQuasar } from 'quasar';
+import { useRouter } from "vue-router";
+
 defineOptions({
   name: 'MainLayout'
 })
 
+const $q = useQuasar();
+const store = useAuthenticationStore();
+const loggedIn = computed(() => store.getLoggedIn);
+const router = useRouter();
+
 const year = new Date().getFullYear();
 
+function logout() {
+  store.signOut().then(() => {
+    $q.notify({
+      type: 'positive',
+      message: 'User logged out!'
+    });
+    router.push("/");
+  })
+}
 </script>
 
 <style lang="scss">
