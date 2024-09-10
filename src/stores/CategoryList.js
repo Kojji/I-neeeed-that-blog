@@ -19,6 +19,7 @@ export const useCategoryListStore = defineStore("categoryList", {
 
         categoriesArray = [
           {
+            id: "ghXpIOWWN6A5W2abdn8F",
             title: "Cooking Gadgets",
             photoUrl:
               "https://ae-pic-a1.aliexpress-media.com/kf/S3a417784280a4979a195eae718cfe28fF.jpg_640x640Q90.jpg_.webp",
@@ -26,6 +27,7 @@ export const useCategoryListStore = defineStore("categoryList", {
             active: true,
           },
           {
+            id: "vKlpISuoc8zKmHMZExxv",
             title: "Christmas Gifts",
             photoUrl:
               "https://images.mid-day.com/images/images/2022/nov/christmas_d.jpg",

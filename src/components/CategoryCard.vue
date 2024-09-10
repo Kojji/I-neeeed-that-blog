@@ -20,6 +20,11 @@ defineOptions({
 });
 
 const props = defineProps({
+  id: {
+    type: String,
+    required: true
+  },
+
   title: {
     type: String,
     required: true
@@ -43,12 +48,14 @@ const props = defineProps({
 
 async function navigateToPostList(params) {
   await store.$patch({
-    title: props.title,
-    active: props.active,
-    photoUrl: props.photoUrl,
-    shortVersion: "",
+    selectedCategory: {
+      id: props.id,
+      title: props.title,
+      active: props.active,
+      photoUrl: props.photoUrl,
+      urlAlias: props.urlAlias
+    }
   })
-  console.log(params)
   router.push('/category/' + params)
 };
 </script>
