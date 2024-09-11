@@ -6,7 +6,11 @@
       </q-card-section>
       <q-card-section>
         <q-input v-model="loginEmail" label="Email" />
-        <q-input v-model="loginPassword" label="Password" />
+        <q-input v-model="loginPassword" :type="isPwd ? 'password' : 'text'" label="Password">
+          <template v-slot:append>
+            <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
+          </template>
+        </q-input>
       </q-card-section>
       <q-card-section class="row justify-end">
         <q-btn disable style="width: 150px;" color="teal-9" v-if="loginLoading">
@@ -21,7 +25,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, computed } from 'vue';
 import { useRouter } from "vue-router";
 import { useAuthenticationStore } from 'stores/LoginAuth';
 import { useQuasar } from 'quasar';
@@ -29,6 +33,7 @@ import { useQuasar } from 'quasar';
 const loginLoading = ref(false);
 const loginEmail = ref("");
 const loginPassword = ref("");
+const isPwd = ref(true);
 
 const $q = useQuasar();
 const router = useRouter();
@@ -38,15 +43,6 @@ defineOptions({
   name: 'AdminLoginPage'
 });
 
-onMounted(() => {
-  store.checkToken().then(() => {
-    router.push("/admin/preview");
-    $q.notify({
-      type: 'positive',
-      message: 'An user is already logged in!'
-    })
-  })
-})
 
 function adminLogin() {
   loginLoading.value = true;

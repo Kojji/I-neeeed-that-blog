@@ -1,28 +1,31 @@
 <template>
-  <q-page class="row post-container">
-    <div class="col">
-      <p class="text-h4 text-weight-bolder q-my-lg">
-        Preview
-      </p>
-      <q-separator color="teal-9" inset />
-      <!-- <q-list>
-        <PostSection v-for="section in postSection" :key="section.order" v-bind:section="section" />
-      </q-list> -->
-    </div>
-  </q-page>
+  <div>
+    <q-page v-if="!loggedIn" class="bg-grey-5 column items-center justify-center">
+      <p class="text-h3" style="max-width: 480px">User must be logged in to access this page</p>
+      <q-btn color="teal-9" to="/admin/login">Login</q-btn>
+    </q-page>
+    <q-page v-else class="row post-container">
+      <div class="col">
+        <p class="text-h4 text-weight-bolder q-my-lg">
+          Preview
+        </p>
+        <q-separator color="teal-9" inset />
+        <!-- <q-list>
+          <PostSection v-for="section in postSection" :key="section.order" v-bind:section="section" />
+        </q-list> -->
+      </div>
+    </q-page>
+  </div>
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue'
-import { useRoute } from "vue-router";
+import { computed } from 'vue'
 import { usePostSelectedStore } from 'stores/BlogPost';
 import { useAuthenticationStore } from 'stores/LoginAuth';
 import PostSection from 'src/components/PostSection.vue';
 
 const authStore = useAuthenticationStore();
 const store = usePostSelectedStore();
-const route = useRoute();
-
 const loggedIn = computed(() => authStore.getLoggedIn);
 // const postSelected = computed(() => store.getPostSelected);
 const postSelected = {
@@ -36,22 +39,11 @@ const postSelected = {
 defineOptions({
   name: 'PreviewPage',
 
-  async preFetch({ currentRoute }) {
+  async preFetch() {
     console.log("blog post page prefetch")
     // retrieve post content from db
   }
 });
-
-onMounted(() => {
-  if (!loggedIn.value) {
-    authStore.checkToken().catch(() => {
-      router.push("/admin/login");
-    })
-  }
-})
-
-// console.log(postSelected.value)
-console.log(route.params.alias)
 
 const postSection = [{
   order: 1,

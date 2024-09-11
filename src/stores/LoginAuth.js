@@ -38,18 +38,20 @@ export const useAuthenticationStore = defineStore("loginAuthentication", {
           });
       });
     },
-    checkToken() {
-      return new Promise(async (res, rej) => {
+    async checkToken() {
+      try {
         await onAuthStateChanged(auth, (user) => {
           if (user) {
             this.loggedIn = true;
             this.userUid = user.uid;
-            res();
+            return;
           } else {
-            rej({ message: "User session expired!" });
+            throw new Error("User session expired!");
           }
         });
-      });
+      } catch (error) {
+        return error;
+      }
     },
     signOut() {
       return new Promise((res, rej) => {

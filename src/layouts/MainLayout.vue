@@ -39,7 +39,7 @@
 
 <script setup>
 import { useAuthenticationStore } from 'stores/LoginAuth';
-import { computed } from 'vue';
+import { computed, onBeforeMount } from 'vue';
 import { useQuasar } from 'quasar';
 import { useRouter } from "vue-router";
 
@@ -53,6 +53,12 @@ const loggedIn = computed(() => store.getLoggedIn);
 const router = useRouter();
 
 const year = new Date().getFullYear();
+
+onBeforeMount(async () => {
+  if (!loggedIn.value) {
+    await store.checkToken();
+  }
+})
 
 function logout() {
   store.signOut().then(() => {
