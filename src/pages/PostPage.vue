@@ -99,7 +99,8 @@ const postSection = [{
       ratio
       col
     cta
-      links
+      products
+      origin
     title
       data
       identifier

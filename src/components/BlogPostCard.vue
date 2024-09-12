@@ -9,7 +9,11 @@
         </q-img>
       </q-card-section>
       <q-card-section>
-        {{ props.title }} - Author - Date - likes
+        <div class="text-h5">
+          {{ props.title }}
+        </div>
+        <div v-html="props.shortVersion">
+        </div>
       </q-card-section>
     </q-card-section>
   </q-card>
@@ -29,7 +33,7 @@ defineOptions({
 const props = defineProps({
   title: {
     type: String,
-    required: true
+    default: ''
   },
 
   photoUrl: {
@@ -39,23 +43,33 @@ const props = defineProps({
 
   urlAlias: {
     type: String,
-    required: true
+    default: ''
   },
-
+  shortVersion: {
+    type: String,
+    default: ''
+  },
   active: {
     type: Boolean,
     default: false
+  },
+  redirectOnCLick: {
+    type: Boolean,
+    default: true
   }
 });
+
 async function navigateToPostPage(params) {
-  console.log(params)
-  await store.$patch({
-    postSelected: {
-      title: props.title,
-      urlAlias: props.urlAlias
-    }
-  });
-  router.push(router.currentRoute.value.fullPath + '/post/' + params)
+  if (props.redirectOnCLick) {
+    console.log(params)
+    await store.$patch({
+      postSelected: {
+        title: props.title,
+        urlAlias: props.urlAlias
+      }
+    });
+    router.push(router.currentRoute.value.fullPath + '/post/' + params)
+  }
 };
 </script>
 
