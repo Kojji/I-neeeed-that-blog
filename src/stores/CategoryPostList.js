@@ -1,6 +1,13 @@
 import { defineStore } from "pinia";
 import { db } from "boot/firebase";
-import { query, where, limit, getDocs, collection } from "firebase/firestore";
+import {
+  query,
+  where,
+  limit,
+  getDocs,
+  collection,
+  orderBy,
+} from "firebase/firestore";
 
 export const useCategorySelected = defineStore("categorySelected", {
   state: () => ({
@@ -12,6 +19,12 @@ export const useCategorySelected = defineStore("categorySelected", {
       photoUrl: "",
       urlAlias: "",
     },
+    postSelected: {
+      id: "",
+      title: "",
+      urlAlias: "",
+    },
+    postContent: [],
   }),
   persist: true,
   getters: {
@@ -20,6 +33,12 @@ export const useCategorySelected = defineStore("categorySelected", {
     },
     getCategorySelected: (state) => {
       return state.selectedCategory;
+    },
+    getPostSelected: (state) => {
+      return state.postSelected;
+    },
+    getPostContent: (state) => {
+      return state.postContent;
     },
   },
   actions: {
@@ -92,6 +111,79 @@ export const useCategorySelected = defineStore("categorySelected", {
       } catch (error) {
         console.log(error);
       }
+    },
+    async retrievePost(categoryAlias, postAlias) {
+      try {
+        if (!this.selectedCategory.id) {
+          const selectedCategoryQuery = query(
+            collection(db, "categories"),
+            where("urlAlias", "==", categoryAlias),
+            where("active", "==", true),
+            limit(1)
+          );
+          const selectedCategoryQuerySnapshot = await getDocs(
+            selectedCategoryQuery
+          );
+          if (selectedCategoryQuerySnapshot.docs.length < 1) {
+            throw new Error("Category not found");
+          }
+
+          let foundCategory = selectedCategoryQuerySnapshot.docs[0].data();
+          let foundCategoryId = selectedCategoryQuerySnapshot.docs[0].id;
+
+          this.selectedCategory = {
+            id: foundCategoryId,
+            ...foundCategory,
+          };
+          console.log(this.selectedCategory);
+        }
+        if (!this.postSelected.id) {
+          const selectedPostQuery = query(
+            collection(db, "categories", this.selectedCategory.id, "posts"),
+            where("urlAlias", "==", postAlias),
+            where("active", "==", true),
+            limit(1)
+          );
+          const selectedPostQuerySnapshot = await getDocs(selectedPostQuery);
+          if (selectedPostQuerySnapshot.docs.length < 1) {
+            throw new Error("Post not found");
+          }
+
+          let foundPost = selectedPostQuerySnapshot.docs[0].data();
+          let foundPostId = selectedPostQuerySnapshot.docs[0].id;
+
+          this.postSelected = {
+            id: foundPostId,
+            ...foundPost,
+          };
+          console.log(this.postSelected);
+        }
+
+        let sections = [];
+        const postSectionsQuery = query(
+          collection(
+            db,
+            "categories",
+            this.selectedCategory.id,
+            "posts",
+            this.postSelected.id,
+            "sections"
+          ),
+          orderBy("order", "asc")
+        );
+        const postSectionsQuerySnapshot = await getDocs(postSectionsQuery);
+        postSectionsQuerySnapshot.forEach((doc) => {
+          let docData = doc.data();
+          sections.push({
+            id: doc.id,
+            ...docData,
+          });
+        });
+        this.postContent = sections;
+      } catch (error) {
+        console.log(error.toString());
+      }
+      // });
     },
   },
 });

@@ -4,7 +4,7 @@
       <q-toolbar class="custom-container ">
         <q-toolbar-title>
           <router-link to="/" class="text-teal-9" style="text-decoration: none;">
-            I NEED THAT!
+            I NEEEED THAT!
           </router-link>
         </q-toolbar-title>
 

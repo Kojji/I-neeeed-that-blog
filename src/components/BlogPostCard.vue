@@ -24,10 +24,10 @@
 </template>
 
 <script setup>
-import { usePostSelectedStore } from 'stores/BlogPost';
+import { useCategorySelected } from 'stores/CategoryPostList';
 import { useRouter } from "vue-router";
 const router = useRouter();
-const store = usePostSelectedStore();
+const store = useCategorySelected();
 
 defineOptions({
   name: 'BlogPostCard'
@@ -35,6 +35,10 @@ defineOptions({
 
 const props = defineProps({
   postCard: {
+    id: {
+      type: String,
+      default: ''
+    },
     title: {
       type: String,
       default: ''
@@ -70,8 +74,9 @@ async function navigateToPostPage(params) {
   if (props.redirectOnCLick) {
     await store.$patch({
       postSelected: {
-        title: props.title,
-        urlAlias: props.urlAlias
+        id: props.postCard.id,
+        title: props.postCard.title,
+        urlAlias: props.postCard.urlAlias
       }
     });
     router.push(router.currentRoute.value.fullPath + '/post/' + params)
