@@ -1,18 +1,21 @@
 <template>
-  <q-card flat bordered class="post-card col-12 q-ma-xs" @click="navigateToPostPage(urlAlias)">
-    <q-card-section horizontal>
-      <q-card-section class="col-4 flex flex-center">
-        <q-img class="rounded-borders" :src="props.photoUrl" :ratio="16 / 9">
+  <q-card flat bordered class="post-card q-ma-xs cursor-pointer" @click="navigateToPostPage(props.postCard.urlAlias)">
+    <q-card-section class="row">
+      <q-card-section class="col-12 col-sm-4 flex flex-center">
+        <q-img class="rounded-borders" :src="props.postCard.photoUrl" :ratio="16 / 9">
           <div class="text-h6 text-center">
             Article
           </div>
         </q-img>
       </q-card-section>
-      <q-card-section>
+      <q-card-section class="col-12 col-sm-8">
         <div class="text-h5">
-          {{ props.title }}
+          {{ props.postCard.title }}
         </div>
-        <div v-html="props.shortVersion">
+        <div class="text-subtitle2 text-grey-8 q-mb-sm">
+          written by <b>{{ props.postCard.author }}</b>
+        </div>
+        <div class="text-body2 card-text-section" v-html="props.postCard.shortVersion">
         </div>
       </q-card-section>
     </q-card-section>
@@ -27,31 +30,35 @@ const router = useRouter();
 const store = usePostSelectedStore();
 
 defineOptions({
-  name: 'CategoryCard'
+  name: 'BlogPostCard'
 });
 
 const props = defineProps({
-  title: {
-    type: String,
-    default: ''
-  },
-
-  photoUrl: {
-    type: String,
-    default: ''
-  },
-
-  urlAlias: {
-    type: String,
-    default: ''
-  },
-  shortVersion: {
-    type: String,
-    default: ''
-  },
-  active: {
-    type: Boolean,
-    default: false
+  postCard: {
+    title: {
+      type: String,
+      default: ''
+    },
+    photoUrl: {
+      type: String,
+      default: ''
+    },
+    author: {
+      type: String,
+      default: ''
+    },
+    urlAlias: {
+      type: String,
+      default: ''
+    },
+    shortVersion: {
+      type: String,
+      default: ''
+    },
+    active: {
+      type: Boolean,
+      default: false
+    },
   },
   redirectOnCLick: {
     type: Boolean,
@@ -61,7 +68,6 @@ const props = defineProps({
 
 async function navigateToPostPage(params) {
   if (props.redirectOnCLick) {
-    console.log(params)
     await store.$patch({
       postSelected: {
         title: props.title,
@@ -84,5 +90,13 @@ async function navigateToPostPage(params) {
   &:hover {
     background-position: left;
   }
+}
+
+.card-text-section {
+  font-family: sans-serif, Helvetica, Arial, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 </style>

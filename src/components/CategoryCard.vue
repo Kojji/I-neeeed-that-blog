@@ -1,5 +1,5 @@
 <template>
-  <q-card class="category-card col-6 col-md-4 q-pa-sm" @click="navigateToPostList(urlAlias)">
+  <q-card class="category-card col-6 col-md-4 q-pa-sm cursor-pointer" @click="navigateToPostList(urlAlias)">
     <q-img :src="props.photoUrl" :ratio="16 / 9">
       <div class="col content-center subtitle-section text-h6 text-center">
         {{ props.title }}

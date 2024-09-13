@@ -74,7 +74,7 @@ function openExpanded() {
 }
 
 function createSection() {
-  editSections.value.push({ sectionString: '{"id":null,order:' + (editSections.value.length + 1) + 'type:""}', loading: false });
+  editSections.value.push({ sectionString: '{"id":null,"order":' + (editSections.value.length + 1) + ',"type":""}', loading: false });
 }
 
 function saveSection(index) {

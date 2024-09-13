@@ -7,7 +7,7 @@
         </q-item-section>
 
         <div class="row items-start">
-          <BlogPostCard v-for="categoryItem in postsList" :key="categoryItem.title" v-bind="categoryItem" />
+          <BlogPostCard v-for="blogPostItem in postsList" :key="blogPostItem.title" v-bind:postCard="blogPostItem" />
         </div>
       </q-list>
       <div class="row justify-center q-ma-md">
@@ -35,8 +35,6 @@ defineOptions({
   async preFetch({ store, currentRoute }) {
     const categorySelectedStore = useCategorySelected(store);
     await categorySelectedStore.retrievePostList(currentRoute.params.alias);
-    console.log("blog post list page prefetch");
-    // retrieve post list from db
   }
 });
 

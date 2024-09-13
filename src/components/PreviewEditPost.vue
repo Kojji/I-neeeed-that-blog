@@ -14,16 +14,16 @@
       <q-card-section class="row">
         <q-input filled v-model="editPostObject.title" label="title" class="col-4 q-pa-sm"></q-input>
         <q-input filled v-model="editPostObject.author" label="author" class="col-4 q-pa-sm"></q-input>
-        <q-input filled v-model="editPostObject.urlAlias" label="url-alias" class="col-4 q-pa-sm"></q-input>
+        <q-input filled v-model="editPostObject.urlAlias" label="urlAlias" class="col-4 q-pa-sm"></q-input>
         <q-input filled v-model="editPostObject.createadAt" label="created-at" class="col-4 q-pa-sm"></q-input>
-        <q-input filled v-model="editPostObject.photoUrl" label="photo-url" class="col-4 q-pa-sm"></q-input>
+        <q-input filled v-model="editPostObject.photoUrl" label="photoUrl" class="col-4 q-pa-sm"></q-input>
         <q-checkbox left-label v-model="editPostObject.active" label="active" class="col-4 q-pa-sm" />
       </q-card-section>
       <q-card-section>
         <q-editor v-model="editPostObject.shortVersion" min-height="5rem" />
       </q-card-section>
       <q-card-section>
-        <BlogPostCard v-if="viewPostCard" v-bind="editPostObject" :redirectOnCLick="false" />
+        <BlogPostCard v-if="viewPostCard" v-bind:v-bind:postCard="editPostObject" v-bind:redirectOnCLick="false" />
       </q-card-section>
       <q-card-actions v-if="loadLoading" class="flex justify-end q-gutter-md">
         <q-btn disable style="width: 150px;" color="teal-9">

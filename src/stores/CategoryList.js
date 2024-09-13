@@ -17,41 +17,38 @@ export const useCategoryListStore = defineStore("categoryList", {
       try {
         let categoriesArray = [];
 
-        categoriesArray = [
-          {
-            id: "ghXpIOWWN6A5W2abdn8F",
-            title: "Cooking Gadgets",
-            photoUrl:
-              "https://ae-pic-a1.aliexpress-media.com/kf/S3a417784280a4979a195eae718cfe28fF.jpg_640x640Q90.jpg_.webp",
-            urlAlias: "cooking-gadgets",
-            active: true,
-          },
-          {
-            id: "vKlpISuoc8zKmHMZExxv",
-            title: "Christmas Gifts",
-            photoUrl:
-              "https://images.mid-day.com/images/images/2022/nov/christmas_d.jpg",
-            urlAlias: "christmas-gifts",
-            active: true,
-          },
-        ];
+        // categoriesArray = [
+        //   {
+        //     id: "ghXpIOWWN6A5W2abdn8F",
+        //     title: "Cooking Gadgets",
+        //     photoUrl:
+        //       "https://ae-pic-a1.aliexpress-media.com/kf/S3a417784280a4979a195eae718cfe28fF.jpg_640x640Q90.jpg_.webp",
+        //     urlAlias: "cooking-gadgets",
+        //     active: true,
+        //   },
+        //   {
+        //     id: "vKlpISuoc8zKmHMZExxv",
+        //     title: "Christmas Gifts",
+        //     photoUrl:
+        //       "https://images.mid-day.com/images/images/2022/nov/christmas_d.jpg",
+        //     urlAlias: "christmas-gifts",
+        //     active: true,
+        //   },
+        // ];
 
-        // const categoriesQuery = query(
-        //   collection(db, "categories"),
-        //   where("active", "==", true),
-        //   limit(6)
-        // );
-        // const categoriesQuerySnapshot = await getDocs(categoriesQuery);
-        // categoriesQuerySnapshot.forEach((doc) => {
-        //   let docData = doc.data();
-        //   categoriesArray.push({
-        //     id: doc.id,
-        //     title: docData.title,
-        //     urlAlias: docData["url-alias"],
-        //     active: docData.active,
-        //     photoUrl: docData["photo-url"],
-        //   });
-        // });
+        const categoriesQuery = query(
+          collection(db, "categories"),
+          where("active", "==", true),
+          limit(6)
+        );
+        const categoriesQuerySnapshot = await getDocs(categoriesQuery);
+        categoriesQuerySnapshot.forEach((doc) => {
+          let docData = doc.data();
+          categoriesArray.push({
+            id: doc.id,
+            ...docData,
+          });
+        });
         this.categories = categoriesArray;
       } catch (error) {
         console.log(error);

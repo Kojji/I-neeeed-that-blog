@@ -65,20 +65,13 @@ export const usePreviewPostStore = defineStore("previewPost", {
           const docSnap = await getDoc(postRef);
 
           if (!docSnap.exists()) {
-            console.log("entered check");
             throw new Error("Post not found!");
           }
           let foundPost = docSnap.data();
           let foundPostId = docSnap.id;
           this.postSelected = {
             id: foundPostId,
-            urlAlias: foundPost["url-alias"],
-            createdAt: foundPost["created-at"],
-            photoUrl: foundPost["photo-url"],
-            shortVersion: foundPost["short-version"],
-            title: foundPost.title,
-            active: foundPost.active,
-            author: foundPost.author,
+            ...foundPost,
           };
           this.postCategoryId = categoryId;
 
