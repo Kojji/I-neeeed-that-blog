@@ -52,6 +52,13 @@ export const useCategorySelected = defineStore("categorySelected", {
   actions: {
     async retrievePostList(alias) {
       try {
+        if (
+          this.postList.length > 0 &&
+          this.postListCount > 0 &&
+          !!this.selectedCategory.id
+        ) {
+          return;
+        }
         if (!this.selectedCategory.id) {
           const selectedCategoryQuery = query(
             collection(db, "categories"),
@@ -215,7 +222,7 @@ export const useCategorySelected = defineStore("categorySelected", {
         const postListQuery = query(
           collection(db, "categories", this.selectedCategory.id, "posts"),
           where("active", "==", true),
-          limit(2),
+          limit(10),
           orderBy("createdAt", "asc"),
           startAfter(docSnap)
         );

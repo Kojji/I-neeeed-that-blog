@@ -30,6 +30,9 @@ export const useCategoryListStore = defineStore("categoryList", {
   actions: {
     async retrieveCategoryList() {
       try {
+        if (this.categories.length > 0 && this.categoryCount > 0) {
+          return;
+        }
         let categoriesArray = [];
 
         // categoriesArray = [

@@ -43,21 +43,23 @@ export const usePreviewPostStore = defineStore("previewPost", {
     createPreviewPost(categoryId) {
       return new Promise(async (res, rej) => {
         try {
+          let newDocData = {
+            title: "New Post",
+            active: false,
+            shortVersion: "",
+            createdAt: serverTimestamp(),
+            urlAlias: "",
+            photoUrl: "",
+            author: "",
+          };
           const docRef = await addDoc(
             collection(db, "categories", categoryId, "posts"),
-            {
-              title: "New Post",
-              active: false,
-              shortVersion: "",
-              createdAt: serverTimestamp(),
-              urlAlias: "",
-              photoUrl: "",
-              author: "",
-            }
+            newDocData
           );
+          delete newDocData.createdAt;
           this.postSelected = {
             id: docRef.id,
-            ...docRef.data(),
+            ...newDocData,
           };
           this.postCategoryId = categoryId;
           res();
