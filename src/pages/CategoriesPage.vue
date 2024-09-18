@@ -16,9 +16,8 @@
           <q-spinner v-if="loading" size="lg" color="teal-5" />
         </div>
       </q-list>
-      <div class="row justify-center q-ma-md">
-        <q-btn outline color="teal-9" class="full-width" @click="paginateUp()"
-          v-if="categoryCount > categoriesList.length">Load
+      <div class="row justify-center q-my-md">
+        <q-btn color="teal-9" class="full-width" @click="paginateUp()" v-if="categoryCount > categoriesList.length">Load
           more categories</q-btn>
         <p v-else class="text-subtitle2 text-teal-6">
           Showing all {{ categoryCount }} categories

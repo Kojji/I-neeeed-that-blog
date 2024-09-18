@@ -4,14 +4,19 @@ import {
   query,
   where,
   limit,
+  doc,
+  getDoc,
   getDocs,
+  startAfter,
   collection,
   orderBy,
+  getCountFromServer,
 } from "firebase/firestore";
 
 export const useCategorySelected = defineStore("categorySelected", {
   state: () => ({
     postList: [],
+    postListCount: 0,
     selectedCategory: {
       id: "",
       title: "",
@@ -30,6 +35,9 @@ export const useCategorySelected = defineStore("categorySelected", {
   getters: {
     getPostList: (state) => {
       return state.postList;
+    },
+    getPostListCount: (state) => {
+      return state.postListCount;
     },
     getCategorySelected: (state) => {
       return state.selectedCategory;
@@ -69,10 +77,16 @@ export const useCategorySelected = defineStore("categorySelected", {
         }
 
         let postListArray = [];
+        const countSnapshot = await getCountFromServer(
+          collection(db, "categories", this.selectedCategory.id, "posts"),
+          where("active", "==", true)
+        );
+        this.postListCount = countSnapshot.data().count;
         const postListQuery = query(
           collection(db, "categories", this.selectedCategory.id, "posts"),
           where("active", "==", true),
-          limit(10)
+          orderBy("createdAt", "asc"),
+          limit(2)
         );
         const postListQuerySnapshot = await getDocs(postListQuery);
         postListQuerySnapshot.forEach((doc) => {
@@ -184,6 +198,41 @@ export const useCategorySelected = defineStore("categorySelected", {
         console.log(error.toString());
       }
       // });
+    },
+    async paginateUp() {
+      try {
+        let postListArray = [];
+
+        const lastPostRef = doc(
+          db,
+          "categories",
+          this.selectedCategory.id,
+          "posts",
+          this.postList[this.postList.length - 1].id
+        );
+        const docSnap = await getDoc(lastPostRef);
+
+        const postListQuery = query(
+          collection(db, "categories", this.selectedCategory.id, "posts"),
+          where("active", "==", true),
+          limit(2),
+          orderBy("createdAt", "asc"),
+          startAfter(docSnap)
+        );
+
+        const postListQuerySnapshot = await getDocs(postListQuery);
+        postListQuerySnapshot.forEach((doc) => {
+          let docData = doc.data();
+          postListArray.push({
+            id: doc.id,
+            ...docData,
+          });
+        });
+        let oldArray = this.postList;
+        this.postList = oldArray.concat(postListArray);
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 });

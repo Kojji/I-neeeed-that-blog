@@ -16,7 +16,6 @@ import {
 export const useCategoryListStore = defineStore("categoryList", {
   state: () => ({
     categories: [],
-    categorySnap: {},
     categoryCount: 0,
   }),
   persist: true,
@@ -100,7 +99,6 @@ export const useCategoryListStore = defineStore("categoryList", {
             id: doc.id,
             ...docData,
           });
-          this.categorySnap = doc;
         });
         let oldArray = this.categories;
         this.categories = oldArray.concat(categoriesArray);

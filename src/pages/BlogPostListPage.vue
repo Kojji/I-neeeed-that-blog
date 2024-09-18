@@ -9,10 +9,16 @@
         <div class="row items-start">
           <BlogPostCard v-for="blogPostItem in postsList" :key="blogPostItem.title" v-bind:postCard="blogPostItem" />
         </div>
+        <div class="row justify-center">
+          <q-spinner v-if="loading" size="lg" color="teal-5" />
+        </div>
       </q-list>
-      <div class="row justify-center q-ma-md">
-        <q-pagination v-model="current" :max="1" :max-pages="5" gutter="sm" direction-links outline color="teal-9"
-          active-design="unelevated" active-color="teal-9" active-text-color="white" />
+      <div class="row justify-center q-my-md">
+        <q-btn color="teal-9" class="full-width" @click="paginateUp()" v-if="postsListCount > postsList.length">Load
+          more posts</q-btn>
+        <p v-else class="text-subtitle2 text-teal-6">
+          Showing all {{ postsListCount }} posts
+        </p>
       </div>
     </div>
   </q-page>
@@ -25,9 +31,10 @@ import { useCategorySelected } from 'stores/CategoryPostList';
 
 const store = useCategorySelected();
 
-let current = ref(1);
+let loading = ref(false);
 const categorySelected = computed(() => store.getCategorySelected);
 const postsList = computed(() => store.getPostList);
+const postsListCount = computed(() => store.getPostListCount);
 
 defineOptions({
   name: 'BlogPostsPage',
@@ -37,5 +44,12 @@ defineOptions({
     await categorySelectedStore.retrievePostList(currentRoute.params.alias);
   }
 });
+
+function paginateUp() {
+  loading.value = true;
+  store.paginateUp().finally(() => {
+    loading.value = false;
+  });
+}
 
 </script>
