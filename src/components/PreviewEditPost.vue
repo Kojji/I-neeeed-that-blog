@@ -15,15 +15,19 @@
         <q-input filled v-model="editPostObject.title" label="title" class="col-4 q-pa-sm"></q-input>
         <q-input filled v-model="editPostObject.author" label="author" class="col-4 q-pa-sm"></q-input>
         <q-input filled v-model="editPostObject.urlAlias" label="urlAlias" class="col-4 q-pa-sm"></q-input>
-        <q-input filled v-model="editPostObject.createadAt" label="created-at" class="col-4 q-pa-sm"></q-input>
         <q-input filled v-model="editPostObject.photoUrl" label="photoUrl" class="col-4 q-pa-sm"></q-input>
+        <div class="col-4 q-pa-sm">
+          <p>Created on:</p>
+          <p>{{ createdAtComputed }}</p>
+        </div>
+
         <q-checkbox left-label v-model="editPostObject.active" label="active" class="col-4 q-pa-sm" />
       </q-card-section>
       <q-card-section>
         <q-editor v-model="editPostObject.shortVersion" min-height="5rem" />
       </q-card-section>
       <q-card-section>
-        <BlogPostCard v-if="viewPostCard" v-bind:v-bind:postCard="editPostObject" v-bind:redirectOnCLick="false" />
+        <BlogPostCard v-if="viewPostCard" v-bind:postCard="editPostObject" v-bind:redirectOnCLick="false" />
       </q-card-section>
       <q-card-actions v-if="loadLoading" class="flex justify-end q-gutter-md">
         <q-btn disable style="width: 150px;" color="teal-9">
@@ -62,6 +66,11 @@ const store = usePreviewPostStore();
 
 const categoryIdInput = computed(() => store.getCategoryId);
 const foundPostInput = computed(() => store.getPostSelected);
+const createdAtComputed = computed(() => {
+  let setdate = new Date(null);
+  setdate.setTime(foundPostInput.value.createdAt.seconds * 1000);
+  return setdate.toLocaleString();
+})
 
 const viewPostCard = ref(false);
 const loadLoading = ref(false);

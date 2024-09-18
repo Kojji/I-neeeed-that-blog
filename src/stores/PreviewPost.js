@@ -9,6 +9,7 @@ import {
   getDocs,
   query,
   orderBy,
+  serverTimestamp,
 } from "firebase/firestore";
 
 export const usePreviewPostStore = defineStore("previewPost", {
@@ -47,10 +48,17 @@ export const usePreviewPostStore = defineStore("previewPost", {
             {
               title: "New Post",
               active: false,
-              "short-version": "",
+              shortVersion: "",
+              createdAt: serverTimestamp(),
+              urlAlias: "",
+              photoUrl: "",
+              author: "",
             }
           );
-          this.postSelected.id = docRef.id;
+          this.postSelected = {
+            id: docRef.id,
+            ...docRef.data(),
+          };
           this.postCategoryId = categoryId;
           res();
         } catch (error) {
