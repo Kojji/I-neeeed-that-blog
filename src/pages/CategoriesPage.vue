@@ -12,10 +12,17 @@
         <div class="row items-start">
           <CategoryCard v-for="categoryItem in categoriesList" :key="categoryItem.title" v-bind="categoryItem" />
         </div>
+        <div class="row justify-center">
+          <q-spinner v-if="loading" size="lg" color="teal-5" />
+        </div>
       </q-list>
       <div class="row justify-center q-ma-md">
-        <q-pagination v-model="current" :max="1" :max-pages="5" gutter="sm" direction-links outline color="teal-9"
-          active-design="unelevated" active-color="teal-9" active-text-color="white" />
+        <q-btn outline color="teal-9" class="full-width" @click="paginateUp()"
+          v-if="categoryCount > categoriesList.length">Load
+          more categories</q-btn>
+        <p v-else class="text-subtitle2 text-teal-6">
+          Showing all {{ categoryCount }} categories
+        </p>
       </div>
     </div>
   </q-page>
@@ -28,8 +35,9 @@ import { useCategoryListStore } from 'stores/CategoryList';
 
 const store = useCategoryListStore();
 const categoriesList = computed(() => store.getCategories);
+const categoryCount = computed(() => store.getCategoryCount);
 
-let current = ref(1);
+let loading = ref(false);
 
 defineOptions({
   name: 'CategoriesPage',
@@ -40,6 +48,11 @@ defineOptions({
   }
 });
 
-
+function paginateUp() {
+  loading.value = true;
+  store.paginateUp().finally(() => {
+    loading.value = false;
+  });
+}
 
 </script>

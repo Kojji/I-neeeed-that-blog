@@ -1,15 +1,31 @@
 import { defineStore } from "pinia";
 import { db } from "boot/firebase";
-import { query, where, limit, getDocs, collection } from "firebase/firestore";
+import {
+  query,
+  where,
+  limit,
+  getDocs,
+  getDoc,
+  doc,
+  collection,
+  orderBy,
+  startAfter,
+  getCountFromServer,
+} from "firebase/firestore";
 
 export const useCategoryListStore = defineStore("categoryList", {
   state: () => ({
     categories: [],
+    categorySnap: {},
+    categoryCount: 0,
   }),
   persist: true,
   getters: {
     getCategories(state) {
       return state.categories;
+    },
+    getCategoryCount(state) {
+      return state.categoryCount;
     },
   },
   actions: {
@@ -35,10 +51,15 @@ export const useCategoryListStore = defineStore("categoryList", {
         //     active: true,
         //   },
         // ];
-
+        const countSnapshot = await getCountFromServer(
+          collection(db, "categories"),
+          where("active", "==", true)
+        );
+        this.categoryCount = countSnapshot.data().count;
         const categoriesQuery = query(
           collection(db, "categories"),
           where("active", "==", true),
+          orderBy("order", "asc"),
           limit(6)
         );
         const categoriesQuerySnapshot = await getDocs(categoriesQuery);
@@ -50,6 +71,39 @@ export const useCategoryListStore = defineStore("categoryList", {
           });
         });
         this.categories = categoriesArray;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async paginateUp() {
+      try {
+        let categoriesArray = [];
+
+        const lastCategoryRef = doc(
+          db,
+          "categories",
+          this.categories[this.categories.length - 1].id
+        );
+        const docSnap = await getDoc(lastCategoryRef);
+
+        const categoriesQuery = query(
+          collection(db, "categories"),
+          where("active", "==", true),
+          limit(6),
+          orderBy("order", "asc"),
+          startAfter(docSnap)
+        );
+        const categoriesQuerySnapshot = await getDocs(categoriesQuery);
+        categoriesQuerySnapshot.forEach((doc) => {
+          let docData = doc.data();
+          categoriesArray.push({
+            id: doc.id,
+            ...docData,
+          });
+          this.categorySnap = doc;
+        });
+        let oldArray = this.categories;
+        this.categories = oldArray.concat(categoriesArray);
       } catch (error) {
         console.log(error);
       }
