@@ -1,30 +1,31 @@
 <template>
-  <q-card flat bordered class="post-card q-ma-xs cursor-pointer" @click="navigateToPostPage(props.postCard.urlAlias)">
-    <q-card-section class="row">
-      <q-card-section class="col-12 col-sm-4 flex flex-center">
-        <q-img class="rounded-borders" :src="props.postCard.photoUrl" :ratio="16 / 9">
-          <div class="text-h6 text-center">
-            Article
+  <router-link :to="router.currentRoute.value.fullPath + '/post/' + props.postCard.urlAlias" class="col-12"
+    style="text-decoration: none;">
+    <q-card flat bordered class="post-card q-ma-xs" @click="loadPostSelected()">
+      <q-card-section class="row">
+        <div class="col-12 col-sm-4 flex flex-center">
+          <img :src="props.postCard.photoUrl" class="rounded-borders post-card-image" />
+        </div>
+        <div class="col-12 col-sm-8 q-px-sm">
+          <div class="text-h5 row">
+            <div class="col-11 text-teal-9">
+              {{ props.postCard.title }}
+            </div>
+            <div class="col-1">
+              <q-btn flat round color="teal-9" icon="mdi-bookmark-plus-outline"
+                @click.stop.prevent="addToBookmarks()" />
+            </div>
           </div>
-        </q-img>
+          <div class="text-subtitle2 text-grey-8 q-mb-sm">
+            written by <b>{{ props.postCard.author }}</b>
+          </div>
+          <div class="text-body2 card-text-section text-grey-10" v-html="props.postCard.shortVersion">
+          </div>
+        </div>
+
       </q-card-section>
-      <q-card-section class="col-12 col-sm-7">
-        <div class="text-h5 row">
-          <div class="col-11">
-            {{ props.postCard.title }}
-          </div>
-          <div class="col-1">
-            <q-btn flat round color="teal-9" icon="mdi-bookmark-plus-outline" @click.stop="addToBookmarks()" />
-          </div>
-        </div>
-        <div class="text-subtitle2 text-grey-8 q-mb-sm">
-          written by <b>{{ props.postCard.author }}</b>
-        </div>
-        <div class="text-body2 card-text-section" v-html="props.postCard.shortVersion">
-        </div>
-      </q-card-section>
-    </q-card-section>
-  </q-card>
+    </q-card>
+  </router-link>
 
 </template>
 
@@ -78,7 +79,7 @@ const props = defineProps({
   }
 });
 
-async function navigateToPostPage(params) {
+async function loadPostSelected() {
   if (props.redirectOnCLick) {
     await store.$patch({
       postSelected: {
@@ -87,7 +88,6 @@ async function navigateToPostPage(params) {
         urlAlias: props.postCard.urlAlias
       }
     });
-    router.push(router.currentRoute.value.fullPath + '/post/' + params)
   }
 };
 
@@ -124,6 +124,13 @@ function addToBookmarks() {
   &:hover {
     background-position: bottom;
   }
+}
+
+.post-card-image {
+  vertical-align: top;
+  object-fit: cover;
+  width: 100%;
+  aspect-ratio: 16/9;
 }
 
 .card-text-section {
