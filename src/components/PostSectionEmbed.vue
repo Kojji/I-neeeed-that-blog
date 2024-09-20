@@ -1,6 +1,6 @@
 <template>
   <div class="col-12">
-    <q-expansion-item icon="video_library" :label="props.label" header-class="bg-teal-2">
+    <q-expansion-item icon="mdi-youtube" :label="props.label" header-class="bg-teal-2">
       <q-card class="bg-teal-1">
         <q-card-section class="row justify-evenly">
           <div v-for="videoLink in props.links" :key="videoLink">

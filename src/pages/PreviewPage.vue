@@ -6,7 +6,7 @@
     </q-page>
     <q-page v-else class="row post-container">
       <div class="col">
-        <q-expansion-item default-opened icon="menu" label="Function Menu" header-class="bg-teal-2">
+        <q-expansion-item default-opened icon="mdi-menu" label="Function Menu" header-class="bg-teal-2">
           <PreviewLoadComponent
             @postLoaded="$refs.editPostComponent.openExpanded(); $refs.editSectionsComponent.openExpanded();" />
           <PreviewEditPostComponent ref="editPostComponent" />

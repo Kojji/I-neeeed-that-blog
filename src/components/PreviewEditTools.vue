@@ -13,7 +13,7 @@
       </q-card-section>
       <q-card-actions class="flex justify-end q-gutter-md">
 
-        <q-btn round color="grey-8" icon="help">
+        <q-btn round color="grey-8" icon="mdi-help">
           <q-tooltip>
             data types<br>
             embed - links, origin, label<br>
@@ -31,17 +31,18 @@
         </q-btn>
       </q-card-actions>
     </q-card>
-    <q-card-section>
+    <div>
       <div v-for="(item, index) in editSections" :key="index" class="row">
         <q-input v-model="item.sectionString" class="col-10" filled type="textarea" />
         <div class="content-center q-mx-auto">
-          <q-btn v-if="!item.loading" unelevated round color="green-8" icon="save" @click="saveSection(index)" />
+          <q-btn v-if="!item.loading" unelevated round color="green-8" icon="mdi-content-save"
+            @click="saveSection(index)" />
           <q-btn v-else disable unelevated round color="green-8">
             <q-spinner size="xs"></q-spinner>
           </q-btn>
         </div>
       </div>
-    </q-card-section>
+    </div>
   </q-expansion-item>
 </template>
 

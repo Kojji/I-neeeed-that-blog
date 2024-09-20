@@ -8,7 +8,7 @@
         <q-input v-model="loginEmail" label="Email" />
         <q-input v-model="loginPassword" :type="isPwd ? 'password' : 'text'" label="Password">
           <template v-slot:append>
-            <q-icon :name="isPwd ? 'visibility_off' : 'visibility'" class="cursor-pointer" @click="isPwd = !isPwd" />
+            <q-icon :name="isPwd ? 'mdi-eye-off' : 'mdi-eye'" class="cursor-pointer" @click="isPwd = !isPwd" />
           </template>
         </q-input>
       </q-card-section>

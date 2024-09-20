@@ -29,7 +29,7 @@
 
 <script setup>
 import CategoryCard from 'src/components/CategoryCard.vue';
-import { ref, computed } from 'vue'
+import { ref, computed } from 'vue';
 import { useCategoryListStore } from 'stores/CategoryList';
 
 const store = useCategoryListStore();
@@ -53,5 +53,4 @@ function paginateUp() {
     loading.value = false;
   });
 }
-
 </script>

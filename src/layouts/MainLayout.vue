@@ -9,14 +9,16 @@
         </q-toolbar-title>
 
         <div>
-          <div v-if="loggedIn">
-            <q-btn color="teal-9" @click="logout()">
+          <div class="q-gutter-sm">
+            <q-btn v-if="loggedIn" color="teal-9" @click="logout()">
               Log out
             </q-btn>
+            <q-btn flat round color="teal-9" icon="mdi-bookmark-multiple">
+              <NavBarBookmarks />
+            </q-btn>
+            <q-btn flat round color="teal-9" icon="mdi-cart" />
           </div>
-          <div v-else>
-            Quasar v{{ $q.version }}
-          </div>
+
         </div>
       </q-toolbar>
     </q-header>
@@ -38,6 +40,7 @@
 </template>
 
 <script setup>
+import NavBarBookmarks from 'src/components/NavBarBookmarks.vue';
 import { useAuthenticationStore } from 'stores/LoginAuth';
 import { computed, onBeforeMount } from 'vue';
 import { useQuasar } from 'quasar';
@@ -54,9 +57,15 @@ const router = useRouter();
 
 const year = new Date().getFullYear();
 
-onBeforeMount(async () => {
+onBeforeMount(() => {
   if (!loggedIn.value) {
-    await store.checkToken();
+    store.checkToken();
+  }
+  if (!$q.localStorage.getItem("buylist")) {
+    $q.localStorage.set("buylist", { amazon: [] });
+  }
+  if (!$q.localStorage.getItem("bookmarks")) {
+    $q.localStorage.set("bookmarks", { posts: [] });
   }
 })
 

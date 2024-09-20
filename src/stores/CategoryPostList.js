@@ -93,7 +93,7 @@ export const useCategorySelected = defineStore("categorySelected", {
           collection(db, "categories", this.selectedCategory.id, "posts"),
           where("active", "==", true),
           orderBy("createdAt", "asc"),
-          limit(2)
+          limit(10)
         );
         const postListQuerySnapshot = await getDocs(postListQuery);
         postListQuerySnapshot.forEach((doc) => {

@@ -8,9 +8,14 @@
           </div>
         </q-img>
       </q-card-section>
-      <q-card-section class="col-12 col-sm-8">
-        <div class="text-h5">
-          {{ props.postCard.title }}
+      <q-card-section class="col-12 col-sm-7">
+        <div class="text-h5 row">
+          <div class="col-11">
+            {{ props.postCard.title }}
+          </div>
+          <div class="col-1">
+            <q-btn flat round color="teal-9" icon="mdi-bookmark-plus-outline" @click.stop="addToBookmarks()" />
+          </div>
         </div>
         <div class="text-subtitle2 text-grey-8 q-mb-sm">
           written by <b>{{ props.postCard.author }}</b>
@@ -26,6 +31,9 @@
 <script setup>
 import { useCategorySelected } from 'stores/CategoryPostList';
 import { useRouter } from "vue-router";
+import { useQuasar } from 'quasar';
+
+const $q = useQuasar();
 const router = useRouter();
 const store = useCategorySelected();
 
@@ -82,18 +90,39 @@ async function navigateToPostPage(params) {
     router.push(router.currentRoute.value.fullPath + '/post/' + params)
   }
 };
+
+function addToBookmarks() {
+  try {
+    let oldArray = [];
+    let localStorageData = $q.localStorage.getItem("bookmarks");
+    oldArray = localStorageData.posts;
+
+    oldArray.push({
+      id: props.postCard.id,
+      path: router.currentRoute.value.fullPath + '/post/' + props.postCard.urlAlias,
+      title: props.postCard.title
+    })
+    $q.localStorage.set("bookmarks", { posts: oldArray });
+    $q.notify({
+      type: 'positive',
+      message: 'Post bookmarked!'
+    })
+  } catch (e) {
+    console.log(e)
+  }
+}
 </script>
 
 <style lang="scss">
 .post-card {
   width: 100%;
   background: rgb(255, 255, 255);
-  background: linear-gradient(142deg, rgba(255, 255, 255, 1) 30%, rgba(52, 167, 153, 1) 50%, rgba(255, 255, 255, 1) 61%) right;
-  background-size: 300% 100%;
-  transition: background-position 0.4s ease-in;
+  background: linear-gradient(5deg, rgb(177, 204, 201) 40%, rgba(255, 255, 255, 1) 60%) top;
+  background-size: 100% 250%;
+  transition: background-position 0.25s ease-in;
 
   &:hover {
-    background-position: left;
+    background-position: bottom;
   }
 }
 
