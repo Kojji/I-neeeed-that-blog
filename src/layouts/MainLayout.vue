@@ -23,7 +23,7 @@
       </q-toolbar>
     </q-header>
 
-    <q-page-container class="custom-container">
+    <q-page-container class="custom-container q-px-sm">
       <router-view />
     </q-page-container>
 

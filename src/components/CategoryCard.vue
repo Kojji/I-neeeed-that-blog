@@ -1,18 +1,17 @@
 <template>
-  <q-card class="category-card col-6 col-md-4 q-pa-sm cursor-pointer" @click="navigateToPostList(urlAlias)">
-    <q-img :src="props.photoUrl" :ratio="16 / 9">
-      <div class="col content-center subtitle-section text-h6 text-center">
-        {{ props.title }}
+  <router-link :to="'/category/' + props.urlAlias" class="col-6 col-md-4">
+    <div class="category-card" @click="loadCategorySelected()">
+      <img :src="props.photoUrl" class="category-card-image" />
+      <div class="overlay column">
+        <div class="subtitle-section text-h6 text-center">{{ props.title }}</div>
       </div>
-    </q-img>
-  </q-card>
+    </div>
+  </router-link>
 </template>
 
 <script setup>
-import { useRouter } from "vue-router";
 import { useCategorySelected } from 'stores/CategoryPostList';
 
-const router = useRouter();
 const store = useCategorySelected();
 
 defineOptions({
@@ -46,7 +45,7 @@ const props = defineProps({
   }
 });
 
-async function navigateToPostList(params) {
+async function loadCategorySelected() {
   await store.$patch({
     selectedCategory: {
       id: props.id,
@@ -56,29 +55,43 @@ async function navigateToPostList(params) {
       urlAlias: props.urlAlias
     }
   })
-  router.push('/category/' + params)
 };
 </script>
 
 <style lang="scss">
+.category-card-image {
+  vertical-align: top;
+  object-fit: cover;
+  width: 100%;
+  max-width: 640px;
+  aspect-ratio: 16/9;
+}
+
+.overlay {
+  position: absolute;
+  overflow: hidden;
+  bottom: 0;
+  width: 100%;
+  max-width: 640px;
+  height: 10%;
+  min-height: 40px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.47);
+  transition: all 0.3s ease-in-out;
+}
+
+
 .category-card {
   width: 100%;
-  box-shadow: none !important;
+  max-width: 640px;
+  position: relative;
 
-  &:hover .subtitle-section {
+  &:hover .overlay {
     height: 100%;
   }
 }
 
 .subtitle-section {
-  bottom: 0;
-  width: 100%;
-  height: 10%;
-  min-height: 40px;
-  padding: 0 !important;
-  color: #fff;
-  background: rgba(0, 0, 0, 0.47);
-  transition: all 0.3s ease-in-out;
-
+  margin: auto;
 }
 </style>

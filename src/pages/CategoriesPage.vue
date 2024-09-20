@@ -9,7 +9,7 @@
           Check out our posts according to what interests you
         </q-item-label>
 
-        <div class="row items-start">
+        <div class="row items-start q-col-gutter-sm">
           <CategoryCard v-for="categoryItem in categoriesList" :key="categoryItem.title" v-bind="categoryItem" />
         </div>
         <div class="row justify-center">
