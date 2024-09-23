@@ -20,48 +20,41 @@
 
 <script setup>
 import { computed } from 'vue';
+import { useRouter } from "vue-router";
 import { useCategorySelected } from 'stores/CategoryPostList';
-import { useBreadcrumbsStore } from 'stores/Breadcrumbs';
 import PostSection from 'src/components/PostSection.vue';
 
 
 const store = useCategorySelected();
-const breadcrumbsStore = useBreadcrumbsStore();
+const router = useRouter();
 
 const postSelected = computed(() => store.getPostSelected);
 const postSection = computed(() => store.getPostContent);
-const breadcrumbs = computed(() => breadcrumbsStore.getNavigationArray);
+const category = computed(() => store.getCategorySelected);
 
+const breadcrumbs = [{
+  label: "Home",
+  to: "/",
+  icon: "home",
+},
+{
+  label: category.value.title,
+  to: "/category/" + router.currentRoute.value.params.alias,
+  icon: "category"
+},
+{
+  label: postSelected.value.title,
+  to: router.currentRoute.value.fullPath,
+  icon: "article"
+},
+]
 
 defineOptions({
   name: 'PostPage',
 
   async preFetch({ store, currentRoute }) {
     const postSelectedStore = useCategorySelected(store);
-    const breadcrumbsStore = useBreadcrumbsStore(store);
-
     await postSelectedStore.retrievePost(currentRoute.params.alias, currentRoute.params.id);
-
-    const category = postSelectedStore.getCategorySelected
-    const post = postSelectedStore.getPostSelected
-    await breadcrumbsStore.$patch({
-      navigationArray: [{
-        label: "Home",
-        to: "/",
-        icon: "home",
-      },
-      {
-        label: category.title,
-        to: "/category/" + currentRoute.params.alias,
-        icon: "category"
-      },
-      {
-        label: post.title,
-        to: currentRoute.fullPath,
-        icon: "article"
-      },
-      ]
-    });
   }
 });
 

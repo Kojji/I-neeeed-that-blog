@@ -37,32 +37,26 @@
 import CategoryCard from 'src/components/CategoryCard.vue';
 import { ref, computed } from 'vue';
 import { useCategoryListStore } from 'stores/CategoryList';
-import { useBreadcrumbsStore } from 'stores/Breadcrumbs';
 
 const store = useCategoryListStore();
-const breadcrumbsStore = useBreadcrumbsStore();
 const categoriesList = computed(() => store.getCategories);
 const categoryCount = computed(() => store.getCategoryCount);
-const breadcrumbs = computed(() => breadcrumbsStore.getNavigationArray);
 
 let loading = ref(false);
+
+const breadcrumbs = [{
+  label: "Home",
+  to: "/",
+  icon: "home",
+},
+]
 
 defineOptions({
   name: 'CategoriesPage',
 
   async preFetch({ store }) {
     const categoryStore = useCategoryListStore(store);
-    const breadcrumbsStore = useBreadcrumbsStore(store);
-
     await categoryStore.retrieveCategoryList();
-
-    await breadcrumbsStore.$patch({
-      navigationArray: [{
-        label: "Home",
-        to: "/",
-        icon: "home",
-      }],
-    });
   }
 });
 

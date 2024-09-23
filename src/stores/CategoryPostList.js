@@ -80,7 +80,6 @@ export const useCategorySelected = defineStore("categorySelected", {
             id: foundCategoryId,
             ...foundCategory,
           };
-          console.log(this.selectedCategory);
         }
 
         let postListArray = [];
@@ -155,7 +154,6 @@ export const useCategorySelected = defineStore("categorySelected", {
             id: foundCategoryId,
             ...foundCategory,
           };
-          console.log(this.selectedCategory);
         }
         if (!this.postSelected.id) {
           const selectedPostQuery = query(
@@ -176,7 +174,6 @@ export const useCategorySelected = defineStore("categorySelected", {
             id: foundPostId,
             ...foundPost,
           };
-          console.log(this.postSelected);
         }
 
         let sections = [];

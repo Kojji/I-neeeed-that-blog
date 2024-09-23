@@ -34,40 +34,35 @@
 import BlogPostCard from 'src/components/BlogPostCard.vue';
 import { ref, computed } from 'vue';
 import { useCategorySelected } from 'stores/CategoryPostList';
-import { useBreadcrumbsStore } from 'stores/Breadcrumbs';
+import { useRouter } from "vue-router";
 
 const store = useCategorySelected();
-const breadcrumbsStore = useBreadcrumbsStore();
+const router = useRouter();
 
 let loading = ref(false);
 const categorySelected = computed(() => store.getCategorySelected);
 const postsList = computed(() => store.getPostList);
 const postsListCount = computed(() => store.getPostListCount);
-const breadcrumbs = computed(() => breadcrumbsStore.getNavigationArray);
 
+
+const breadcrumbs = [{
+  label: "Home",
+  to: "/",
+  icon: "home",
+},
+{
+  label: categorySelected.value.title,
+  to: router.currentRoute.value.fullPath,
+  icon: "category"
+},
+]
 
 defineOptions({
   name: 'BlogPostsPage',
 
   async preFetch({ store, currentRoute }) {
     const categorySelectedStore = useCategorySelected(store);
-    const breadcrumbsStore = useBreadcrumbsStore(store);
-
     await categorySelectedStore.retrievePostList(currentRoute.params.alias);
-
-    const category = categorySelectedStore.getCategorySelected
-    await breadcrumbsStore.$patch({
-      navigationArray: [{
-        label: "Home",
-        to: "/",
-        icon: "home",
-      },
-      {
-        label: category.title,
-        to: currentRoute.fullPath,
-        icon: "category"
-      }]
-    });
   }
 });
 
