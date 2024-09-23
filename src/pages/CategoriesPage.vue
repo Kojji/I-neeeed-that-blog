@@ -3,7 +3,7 @@
     <div class="col">
       <q-list>
         <q-item-section class="q-py-sm">
-          <q-breadcrumbs>
+          <q-breadcrumbs class="text-grey" active-color="teal-9">
             <q-breadcrumbs-el v-for="item in breadcrumbs" :key="item.label" :icon="item.icon ? item.icon : null"
               :label="item.label" :to="item.to" />
           </q-breadcrumbs>

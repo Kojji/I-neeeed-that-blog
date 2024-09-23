@@ -2,7 +2,7 @@
   <q-page class="row post-container">
     <div class="col">
       <q-item-section class="q-py-sm">
-        <q-breadcrumbs>
+        <q-breadcrumbs class="text-grey" active-color="teal-9">
           <q-breadcrumbs-el v-for="item in breadcrumbs" :key="item.label" :icon="item.icon ? item.icon : null"
             :label="item.label" :to="item.to" />
         </q-breadcrumbs>
@@ -58,7 +58,7 @@ defineOptions({
       {
         label: post.title,
         to: currentRoute.fullPath,
-        icon: "category"
+        icon: "article"
       },
       ]
     });
