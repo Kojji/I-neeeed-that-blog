@@ -1,6 +1,12 @@
 <template>
   <q-page class="row post-container">
     <div class="col">
+      <q-item-section class="q-py-sm">
+        <q-breadcrumbs>
+          <q-breadcrumbs-el v-for="item in breadcrumbs" :key="item.label" :icon="item.icon ? item.icon : null"
+            :label="item.label" :to="item.to" />
+        </q-breadcrumbs>
+      </q-item-section>
       <p class="text-h4 text-weight-bolder q-my-lg">
         {{ postSelected.title }}
       </p>
@@ -15,13 +21,16 @@
 <script setup>
 import { computed } from 'vue';
 import { useCategorySelected } from 'stores/CategoryPostList';
+import { useBreadcrumbsStore } from 'stores/Breadcrumbs';
 import PostSection from 'src/components/PostSection.vue';
 
 
 const store = useCategorySelected();
+const breadcrumbsStore = useBreadcrumbsStore();
 
 const postSelected = computed(() => store.getPostSelected);
 const postSection = computed(() => store.getPostContent);
+const breadcrumbs = computed(() => breadcrumbsStore.getNavigationArray);
 
 
 defineOptions({
@@ -29,7 +38,30 @@ defineOptions({
 
   async preFetch({ store, currentRoute }) {
     const postSelectedStore = useCategorySelected(store);
+    const breadcrumbsStore = useBreadcrumbsStore(store);
+
     await postSelectedStore.retrievePost(currentRoute.params.alias, currentRoute.params.id);
+
+    const category = postSelectedStore.getCategorySelected
+    const post = postSelectedStore.getPostSelected
+    await breadcrumbsStore.$patch({
+      navigationArray: [{
+        label: "Home",
+        to: "/",
+        icon: "home",
+      },
+      {
+        label: category.title,
+        to: "/category/" + currentRoute.params.alias,
+        icon: "category"
+      },
+      {
+        label: post.title,
+        to: currentRoute.fullPath,
+        icon: "category"
+      },
+      ]
+    });
   }
 });
 

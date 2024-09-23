@@ -98,7 +98,6 @@ export const useCategorySelected = defineStore("categorySelected", {
         const postListQuerySnapshot = await getDocs(postListQuery);
         postListQuerySnapshot.forEach((doc) => {
           let docData = doc.data();
-          console.log(docData);
           postListArray.push({
             id: doc.id,
             ...docData,

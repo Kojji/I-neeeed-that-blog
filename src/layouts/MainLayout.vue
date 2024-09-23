@@ -27,7 +27,7 @@
       <router-view />
     </q-page-container>
 
-    <q-footer elevated class="bg-white q-py-md">
+    <q-card class="bg-white q-py-md">
       <div class="custom-container row justify-center">
         <a class="text-teal-9" href="https://fernandokoji.dev" target="_blank" style="text-decoration: none;">
           {{
@@ -35,7 +35,7 @@
           }}
         </a>
       </div>
-    </q-footer>
+    </q-card>
   </q-layout>
 </template>
 

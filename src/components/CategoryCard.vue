@@ -1,7 +1,8 @@
 <template>
   <router-link :to="'/category/' + props.urlAlias" class="col-6 col-md-4">
     <div class="category-card" @click="loadCategorySelected()">
-      <img :src="props.photoUrl" class="category-card-image" />
+      <img v-if="props.photoUrl" :src="props.photoUrl" class="category-card-image" />
+      <img v-else src="/src/assets/image-not-found.jpg" class="category-card-image" />
       <div class="overlay column">
         <div class="subtitle-section text-h6 text-center">{{ props.title }}</div>
       </div>

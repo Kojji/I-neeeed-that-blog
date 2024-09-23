@@ -4,7 +4,8 @@
     <q-card flat bordered class="post-card q-ma-xs" @click="loadPostSelected()">
       <q-card-section class="row">
         <div class="col-12 col-sm-4 flex flex-center">
-          <img :src="props.postCard.photoUrl" class="rounded-borders post-card-image" />
+          <img v-if="props.postCard.photoUrl" :src="props.postCard.photoUrl" class="rounded-borders post-card-image" />
+          <img v-else src="/src/assets/image-not-found.jpg" class="rounded-borders post-card-image" />
         </div>
         <div class="col-12 col-sm-8 q-px-sm">
           <div class="text-h5 row">

@@ -2,6 +2,12 @@
   <q-page class="row">
     <div class="col">
       <q-list>
+        <q-item-section class="q-py-sm">
+          <q-breadcrumbs>
+            <q-breadcrumbs-el v-for="item in breadcrumbs" :key="item.label" :icon="item.icon ? item.icon : null"
+              :label="item.label" :to="item.to" />
+          </q-breadcrumbs>
+        </q-item-section>
         <q-item-section class="text-center text-h4 q-pt-lg text-uppercase">
           Categories
         </q-item-section>
@@ -31,10 +37,13 @@
 import CategoryCard from 'src/components/CategoryCard.vue';
 import { ref, computed } from 'vue';
 import { useCategoryListStore } from 'stores/CategoryList';
+import { useBreadcrumbsStore } from 'stores/Breadcrumbs';
 
 const store = useCategoryListStore();
+const breadcrumbsStore = useBreadcrumbsStore();
 const categoriesList = computed(() => store.getCategories);
 const categoryCount = computed(() => store.getCategoryCount);
+const breadcrumbs = computed(() => breadcrumbsStore.getNavigationArray);
 
 let loading = ref(false);
 
@@ -43,7 +52,17 @@ defineOptions({
 
   async preFetch({ store }) {
     const categoryStore = useCategoryListStore(store);
+    const breadcrumbsStore = useBreadcrumbsStore(store);
+
     await categoryStore.retrieveCategoryList();
+
+    await breadcrumbsStore.$patch({
+      navigationArray: [{
+        label: "Home",
+        to: "/",
+        icon: "home",
+      }],
+    });
   }
 });
 
