@@ -36,18 +36,15 @@ defineOptions({
 });
 
 function loadList() {
-  let bookmarksArray = $q.localStorage.getItem("bookmarks");
-  bookmarkList.value = bookmarksArray.posts;
+  bookmarkList.value = $q.localStorage.getItem("bookmarks");
 }
 
 function removeBookmark(index) {
   try {
-    let oldArray = [];
-    let localStorageData = $q.localStorage.getItem("bookmarks");
-    oldArray = localStorageData.posts;
+    let oldArray = $q.localStorage.getItem("bookmarks");
 
     oldArray.splice(index, 1);
-    $q.localStorage.set("bookmarks", { posts: oldArray });
+    $q.localStorage.set("bookmarks", oldArray);
     bookmarkList.value = oldArray;
     $q.notify({
       type: 'positive',

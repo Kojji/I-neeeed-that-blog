@@ -237,5 +237,36 @@ export const useCategorySelected = defineStore("categorySelected", {
         console.log(error);
       }
     },
+    async retrieveLinks(documentId) {
+      return new Promise(async (res, rej) => {
+        try {
+          let links = [];
+          const linksSectionQuery = query(
+            collection(
+              db,
+              "categories",
+              this.selectedCategory.id,
+              "posts",
+              this.postSelected.id,
+              "sections",
+              documentId,
+              "links"
+            )
+          );
+          const linksSectionQuerySnapshot = await getDocs(linksSectionQuery);
+          linksSectionQuerySnapshot.forEach((doc) => {
+            let docData = doc.data();
+            links.push({
+              id: doc.id,
+              ...docData,
+            });
+          });
+          res(links);
+        } catch (error) {
+          console.log(error.toString());
+          rej(error.toString());
+        }
+      });
+    },
   },
 });

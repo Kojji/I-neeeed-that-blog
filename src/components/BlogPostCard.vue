@@ -96,14 +96,14 @@ function addToBookmarks() {
   try {
     let oldArray = [];
     let localStorageData = $q.localStorage.getItem("bookmarks");
-    oldArray = localStorageData.posts;
+    oldArray = localStorageData;
 
     oldArray.push({
       id: props.postCard.id,
       path: router.currentRoute.value.fullPath + '/post/' + props.postCard.urlAlias,
       title: props.postCard.title
     })
-    $q.localStorage.set("bookmarks", { posts: oldArray });
+    $q.localStorage.set("bookmarks", oldArray);
     $q.notify({
       type: 'positive',
       message: 'Post bookmarked!'

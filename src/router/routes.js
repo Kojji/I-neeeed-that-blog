@@ -50,6 +50,17 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/buylist",
+    component: () => import("layouts/MainLayout.vue"),
+    children: [
+      {
+        path: "",
+        name: "buylist-page",
+        component: () => import("pages/BuylistPage.vue"),
+      },
+    ],
+  },
 
   // Always leave this as last one,
   // but you can also remove it

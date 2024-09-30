@@ -14,11 +14,17 @@
               Log out
             </q-btn>
             <q-btn flat round color="teal-9" icon="mdi-bookmark-multiple">
+              <q-tooltip>
+                Bookmarks
+              </q-tooltip>
               <NavBarBookmarks />
             </q-btn>
-            <q-btn flat round color="teal-9" icon="mdi-cart" />
+            <q-btn flat round color="teal-9" icon="mdi-receipt-text-outline" @click="goToBuylist()">
+              <q-tooltip>
+                Buylist
+              </q-tooltip>
+            </q-btn>
           </div>
-
         </div>
       </q-toolbar>
     </q-header>
@@ -62,12 +68,16 @@ onBeforeMount(() => {
     store.checkToken();
   }
   if (!$q.localStorage.getItem("buylist")) {
-    $q.localStorage.set("buylist", { amazon: [] });
+    $q.localStorage.set("buylist", []);
   }
   if (!$q.localStorage.getItem("bookmarks")) {
-    $q.localStorage.set("bookmarks", { posts: [] });
+    $q.localStorage.set("bookmarks", []);
   }
 })
+
+function goToBuylist() {
+  router.push("/buylist");
+}
 
 function logout() {
   store.signOut().then(() => {
