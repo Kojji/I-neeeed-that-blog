@@ -84,8 +84,10 @@ export const useCategorySelected = defineStore("categorySelected", {
 
         let postListArray = [];
         const countSnapshot = await getCountFromServer(
-          collection(db, "categories", this.selectedCategory.id, "posts"),
-          where("active", "==", true)
+          query(
+            collection(db, "categories", this.selectedCategory.id, "posts"),
+            where("active", "==", true)
+          )
         );
         this.postListCount = countSnapshot.data().count;
         const postListQuery = query(

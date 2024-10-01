@@ -54,8 +54,7 @@ export const useCategoryListStore = defineStore("categoryList", {
         //   },
         // ];
         const countSnapshot = await getCountFromServer(
-          collection(db, "categories"),
-          where("active", "==", true)
+          query(collection(db, "categories"), where("active", "==", true))
         );
         this.categoryCount = countSnapshot.data().count;
         const categoriesQuery = query(
