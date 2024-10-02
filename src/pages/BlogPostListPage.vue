@@ -3,12 +3,12 @@
     <div class="col">
       <q-list>
         <q-item-section class="q-py-sm">
-          <q-breadcrumbs class="text-grey" active-color="teal-9">
+          <q-breadcrumbs class="text-teal-2" active-color="teal-4">
             <q-breadcrumbs-el v-for="item in breadcrumbs" :key="item.label" :icon="item.icon ? item.icon : 'none'"
               :label="item.label" :to="item.to" />
           </q-breadcrumbs>
         </q-item-section>
-        <q-item-section class="text-center text-h4 q-pt-lg text-uppercase">
+        <q-item-section class="text-center text-teal-3 text-h4 q-pt-lg text-uppercase">
           {{ categorySelected.title }} - Posts
         </q-item-section>
 
@@ -22,7 +22,7 @@
       <div class="row justify-center q-my-md">
         <q-btn color="teal-9" class="full-width" @click="paginateUp()" v-if="postsListCount > postsList.length">Load
           more posts</q-btn>
-        <p v-else class="text-subtitle2 text-teal-6">
+        <p v-else class="text-subtitle2 text-teal-2">
           Showing all {{ postsListCount }} posts
         </p>
       </div>

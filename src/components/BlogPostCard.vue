@@ -1,7 +1,7 @@
 <template>
   <router-link :to="router.currentRoute.value.fullPath + '/post/' + props.postCard.urlAlias" class="col-12"
     style="text-decoration: none;">
-    <q-card flat bordered class="post-card q-ma-xs" @click="loadPostSelected()">
+    <q-card flat bordered class="post-card  q-ma-xs" @click="loadPostSelected()">
       <q-card-section class="row">
         <div class="col-12 col-sm-4 flex flex-center">
           <img v-if="props.postCard.photoUrl" :src="props.postCard.photoUrl" class="rounded-borders post-card-image" />
@@ -9,18 +9,18 @@
         </div>
         <div class="col-12 col-sm-8 q-px-sm">
           <div class="text-h5 row">
-            <div class="col-11 text-teal-9">
+            <div class="col-11 text-teal-1">
               {{ props.postCard.title }}
             </div>
             <div class="col-1">
-              <q-btn flat round color="teal-9" icon="mdi-bookmark-plus-outline"
+              <q-btn flat round color="teal-1" icon="mdi-bookmark-plus-outline" size="md"
                 @click.stop.prevent="addToBookmarks()" />
             </div>
           </div>
-          <div class="text-subtitle2 text-grey-8 q-mb-sm">
-            written by <b>{{ props.postCard.author }}</b>
+          <div class="text-subtitle2 text-teal-2 q-mb-sm">
+            Written in {{ props.postCard.dateCreated }}
           </div>
-          <div class="text-body2 card-text-section text-grey-10" v-html="props.postCard.shortVersion">
+          <div class="text-body2 card-text-section text-teal-1" v-html="props.postCard.shortVersion">
           </div>
         </div>
 
@@ -66,6 +66,10 @@ const props = defineProps({
       default: ''
     },
     shortVersion: {
+      type: String,
+      default: ''
+    },
+    dateCreated: {
       type: String,
       default: ''
     },
@@ -117,8 +121,8 @@ function addToBookmarks() {
 <style lang="scss">
 .post-card {
   width: 100%;
-  background: rgb(255, 255, 255);
-  background: linear-gradient(5deg, rgb(177, 204, 201) 40%, rgba(255, 255, 255, 1) 60%) top;
+  background: rgb(50, 71, 79);
+  background: linear-gradient(5deg, rgb(9, 34, 31) 40%, rgb(50, 71, 79) 60%) top;
   background-size: 100% 250%;
   transition: background-position 0.25s ease-in;
 
@@ -132,6 +136,7 @@ function addToBookmarks() {
   object-fit: cover;
   width: 100%;
   aspect-ratio: 16/9;
+  opacity: 0.75;
 }
 
 .card-text-section {
