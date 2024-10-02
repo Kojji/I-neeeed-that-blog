@@ -7,8 +7,11 @@
             :label="item.label" :to="item.to" />
         </q-breadcrumbs>
       </q-item-section>
-      <p class="text-h4 text-weight-bolder q-my-lg">
+      <p class="text-h4 text-weight-bolder q-mt-lg">
         {{ postSelected.title }}
+      </p>
+      <p class="text-subtitle2 text-blue-grey-6 text-weight-medium q-mb-lg">
+        Written in {{ createdAtComputed }}
       </p>
       <q-separator color="teal-9" inset />
       <q-list>
@@ -79,6 +82,14 @@ defineOptions({
 
     compare *
 */
+
+const createdAtComputed = computed(() => {
+  let setdate = new Date(null);
+  setdate.setTime(postSelected.value.createdAt.seconds * 1000);
+  return setdate.toLocaleDateString();
+})
+
+
 </script>
 
 <style lang="scss">

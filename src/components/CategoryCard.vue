@@ -77,7 +77,7 @@ async function loadCategorySelected() {
   height: 10%;
   min-height: 40px;
   color: #fff;
-  background: rgba(0, 0, 0, 0.47);
+  background: rgba(0, 0, 0, 0.57);
   transition: all 0.3s ease-in-out;
 }
 

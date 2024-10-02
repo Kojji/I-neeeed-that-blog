@@ -1,25 +1,28 @@
 <template>
-  <q-layout view="hHh lpR fFf">
-    <q-header elevated class="bg-white text-teal-9 ">
+  <q-layout view="hHh lpR fFf" class="root-styling">
+    <q-header elevated class="bg-blue-grey-9 text-teal-9 ">
       <q-toolbar class="custom-container ">
         <q-toolbar-title>
-          <router-link to="/" class="text-teal-9" style="text-decoration: none;">
-            I NEEEED THAT!
+          <router-link to="/" class="text-white row items-center" style="text-decoration: none;">
+            <q-avatar rounded class="q-mr-sm q-my-sm">
+              <img src="/src/assets/logo-white.png">
+            </q-avatar>
+            <div class="gt-xs">Fernando Koji's Blog</div>
           </router-link>
         </q-toolbar-title>
 
         <div>
           <div class="q-gutter-sm">
-            <q-btn v-if="loggedIn" color="teal-9" @click="logout()">
+            <q-btn v-if="loggedIn" color="white" @click="logout()">
               Log out
             </q-btn>
-            <q-btn flat round color="teal-9" icon="mdi-bookmark-multiple">
+            <q-btn flat round color="white" icon="mdi-bookmark-multiple">
               <q-tooltip>
                 Bookmarks
               </q-tooltip>
               <NavBarBookmarks />
             </q-btn>
-            <q-btn flat round color="teal-9" icon="mdi-receipt-text-outline" @click="goToBuylist()">
+            <q-btn flat round color="white" icon="mdi-receipt-text-outline" @click="goToBuylist()">
               <q-tooltip>
                 Buylist
               </q-tooltip>
@@ -33,9 +36,9 @@
       <router-view />
     </q-page-container>
 
-    <q-card class="bg-white q-py-md">
+    <q-card class="bg-blue-grey-9 q-py-md">
       <div class="custom-container row justify-center">
-        <a class="text-teal-9" href="https://fernandokoji.dev" target="_blank" style="text-decoration: none;">
+        <a class="text-white" href="https://fernandokoji.dev" target="_blank" style="text-decoration: none;">
           {{
             `@${year} - Fernando Koji Yamashiro`
           }}
@@ -95,5 +98,9 @@ function logout() {
   max-width: 980px;
   width: 100%;
   margin: 0 auto;
+}
+
+.root-styling {
+  background-color: #1c273f;
 }
 </style>
